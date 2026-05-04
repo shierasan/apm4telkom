@@ -1,0 +1,23 @@
+{
+  "name": "apm4telkom",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shierasan/apm4telkom.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shierasan/apm4telkom/issues"
+  },
+  "homepage": "https://github.com/shierasan/apm4telkom#readme",
+  "dependencies": {
+    "axios": "^1.16.0"
+  }
+}
