@@ -1,0 +1,12 @@
+node_modules/
+npm-debug.log
+*.log
+.DS_Store
+.env
+.env.local
+.vscode/
+dist/
+build/
+*.pyc
+__pycache__/
+.idea/

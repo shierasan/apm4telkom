@@ -1,0 +1,114 @@
+[
+  {
+    "id": "22f42bc3-b592-4e24-8557-f872f009609a",
+    "timestamp": "2026-05-04T03:57:25.001Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 20,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.8,
+      "reasoning": "SLA >3x24 jam, masih dalam batas waktu"
+    },
+    "user": "System"
+  },
+  {
+    "id": "1d289fb1-cf22-4d83-8c36-4d689ab426d9",
+    "timestamp": "2026-05-04T03:56:56.818Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 30,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.8,
+      "reasoning": "SLA >3x24 jam, masih dalam batas waktu"
+    },
+    "user": "System"
+  },
+  {
+    "id": "a28e4eaf-c1ba-460b-8c2a-dd2f09a39be2",
+    "timestamp": "2026-05-04T03:41:43.893Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 50,
+      "sto": "STO 2"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.8,
+      "reasoning": "SLA >3x24 jam, masih dalam batas waktu"
+    },
+    "user": "System"
+  },
+  {
+    "id": "5a369478-56fe-4f13-9ad2-a6f70eefa190",
+    "timestamp": "2026-05-04T03:41:43.885Z",
+    "input": {
+      "status_hi": "Open",
+      "ttic": "1x24 jam",
+      "ttd_kb_num": 100,
+      "sto": "STO Pekanbaru"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 0.98,
+      "reasoning": "SLA 1x24 jam merupakan prioritas tertinggi"
+    },
+    "user": "System"
+  },
+  {
+    "id": "85a987af-a810-4c34-b63e-4f0974b30606",
+    "timestamp": "2026-05-04T03:42:41.199Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.85,
+      "reasoning": "SLA 2x24 jam, kontrak standar"
+    },
+    "user": "System"
+  },
+  {
+    "id": "dce9e0c5-9bdc-4518-9176-4a2379a0ca7f",
+    "timestamp": "2026-05-04T03:57:10.162Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 180,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 0.9,
+      "reasoning": "Overdue dengan kontrak pelanggan penting"
+    },
+    "user": "System"
+  },
+  {
+    "id": "55c8a0cc-2404-4cc4-a2e3-db397004301c",
+    "timestamp": "2026-05-04T03:57:32.280Z",
+    "input": {
+      "status_hi": "Closed",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 20,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Rendah",
+      "confidence": 0.95,
+      "reasoning": "Kendala sudah ditutup atau ditolak"
+    },
+    "user": "System"
+  }
+]
