@@ -39,7 +39,7 @@
           <div class="card card-soft p-3 mb-3">
             <div class="row g-2 align-items-center">
               <div class="col-md-4"><label class="form-label mb-1" for="filterPriority">Filter Prioritas</label><select id="filterPriority" class="form-select"><option value="">Semua Prioritas</option><option value="Tinggi">Tinggi</option><option value="Sedang">Sedang</option><option value="Rendah">Rendah</option></select></div>
-              <div class="col-md-8 text-md-end d-flex gap-2 justify-content-md-end mt-3 mt-md-0"><button id="refreshHistoryBtn" class="btn btn-outline-primary"><i class="fas fa-rotate me-2"></i>Refresh</button><button id="exportCsvBtn" class="btn btn-outline-success"><i class="fas fa-file-csv me-2"></i>CSV</button><button id="exportXlsxBtn" class="btn btn-outline-success"><i class="fas fa-file-excel me-2"></i>XLSX</button><button id="exportPdfBtn" class="btn btn-outline-danger"><i class="fas fa-file-pdf me-2"></i>PDF</button></div>
+              <div class="col-md-8 text-md-end d-flex flex-wrap gap-2 justify-content-md-end mt-3 mt-md-0"><button id="refreshHistoryBtn" class="btn btn-outline-primary"><i class="fas fa-rotate me-2"></i>Refresh</button><button id="selectAllHistoryBtn" class="btn btn-outline-secondary"><i class="fas fa-check-double me-2"></i>Pilih Semua</button><button id="deleteSelectedHistoryBtn" class="btn btn-danger"><i class="fas fa-trash me-2"></i>Hapus Terpilih</button><button id="exportCsvBtn" class="btn btn-outline-success"><i class="fas fa-file-csv me-2"></i>CSV</button><button id="exportXlsxBtn" class="btn btn-outline-success"><i class="fas fa-file-excel me-2"></i>XLSX</button><button id="exportPdfBtn" class="btn btn-outline-danger"><i class="fas fa-file-pdf me-2"></i>PDF</button></div>
             </div>
           </div>
         </section>
@@ -49,13 +49,25 @@
             <div class="card-body table-responsive">
               <table class="table align-middle mb-0">
                 <thead>
-                  <tr><th>No</th><th>Waktu</th><th>Status HI</th><th>TTIC</th><th>TTD KB</th><th>Prioritas</th><th>Confidence</th><th>Aksi</th></tr>
+                  <tr><th style="width: 44px;"><input type="checkbox" id="selectAllHistoryCheckbox" class="form-check-input"></th><th>No</th><th>Waktu</th><th>Status HI</th><th>TTIC</th><th>TTD KB</th><th>Prioritas</th><th>Confidence</th><th>Aksi</th></tr>
                 </thead>
-                <tbody id="historyTableBody"><tr><td colspan="8" class="text-center text-muted py-4">Memuat data...</td></tr></tbody>
+                <tbody id="historyTableBody"><tr><td colspan="9" class="text-center text-muted py-4">Memuat data...</td></tr></tbody>
               </table>
             </div>
           </div>
         </section>
+
+          <section class="page-section">
+            <div class="card card-soft p-3">
+              <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                <div class="text-muted small" id="historyPageInfo">Memuat halaman...</div>
+                <div class="d-flex align-items-center gap-2">
+                  <button id="historyPrevBtn" class="btn btn-outline-secondary btn-sm"><i class="fas fa-chevron-left me-1"></i>Sebelumnya</button>
+                  <button id="historyNextBtn" class="btn btn-outline-secondary btn-sm">Berikutnya<i class="fas fa-chevron-right ms-1"></i></button>
+                </div>
+              </div>
+            </div>
+          </section>
 
         <div id="loadingOverlay" class="loading-overlay"><div class="loading-card"><div class="d-flex align-items-center gap-2"><div class="spinner-border text-danger" role="status"></div><div>Memuat riwayat...</div></div></div></div>
       </main>

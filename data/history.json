@@ -1,11 +1,389 @@
 [
   {
-    "id": "279c2f42-f731-42e1-a046-93aa84730ccd",
-    "timestamp": "2026-05-31T11:23:04.145Z",
+    "id": "89fae2f6-81f3-4c9e-84b2-beceea0111f1",
+    "timestamp": "2026-05-31T11:40:17.583Z",
     "input": {
       "status_hi": "In Progress",
       "ttic": "1x24 jam",
-      "ttd_kb_num": 5,
+      "ttd_kb_num": 88,
+      "sto": "RGT"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "3caa6abc-e94e-444b-b77d-93158583c57a",
+    "timestamp": "2026-05-31T11:40:00.777Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 85,
+      "sto": "RGT"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "f1721c2b-2d92-46ba-8b3e-e441f938f092",
+    "timestamp": "2026-05-31T11:39:58.300Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 90,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "c7ae18f5-de58-4a64-a588-96f5e75a3a83",
+    "timestamp": "2026-05-31T11:39:55.935Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "ee086c26-c62b-4e5d-a9bb-974dbc5a5324",
+    "timestamp": "2026-05-31T11:39:53.666Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "c9a05ed4-99d6-454c-bba9-1cede9626a69",
+    "timestamp": "2026-05-31T11:39:51.399Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 120,
+      "sto": "RGT"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "7dfaa9f4-7ded-4b37-b524-04d4a413797f",
+    "timestamp": "2026-05-31T11:39:49.085Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 60,
+      "sto": "PBB"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "9dea09da-b398-4924-9af6-771235205fb4",
+    "timestamp": "2026-05-31T11:39:46.660Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "1bbe1ea4-ebb6-450f-8d39-9954f0100123",
+    "timestamp": "2026-05-31T11:39:44.093Z",
+    "input": {
+      "status_hi": "Closed",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 20,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Rendah",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        1,
+        0,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "fb8ccd92-24dd-4439-a8bb-78878170b13f",
+    "timestamp": "2026-05-31T11:39:41.763Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "3fab68f4-cf6a-4682-b8e2-dc1d4c22bf3e",
+    "timestamp": "2026-05-31T11:39:36.734Z",
+    "input": {
+      "status_hi": "Closed",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 20,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Rendah",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        1,
+        0,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "76026ca1-4e0e-4975-a597-5dcd1177ec45",
+    "timestamp": "2026-05-31T11:39:34.488Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "12296539-5e69-40e5-9152-dbc18a419085",
+    "timestamp": "2026-05-31T11:39:32.097Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "dea6c1f8-75c0-4b27-819f-3ae2cb4519b7",
+    "timestamp": "2026-05-31T11:39:29.464Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "1x24 jam",
+      "ttd_kb_num": 100,
+      "sto": "PBB"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "0db219cb-8fca-479d-9204-85642d768682",
+    "timestamp": "2026-05-31T11:39:26.255Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 20,
       "sto": "PBR"
     },
     "output": {
@@ -16,6 +394,2247 @@
         0.05,
         0.95,
         0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "d4d6a4a9-9184-440a-8fdf-d5b64484fcb5",
+    "timestamp": "2026-05-31T11:39:22.313Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 30,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "9cdcb3a2-5da6-4322-9d6a-303c353afd65",
+    "timestamp": "2026-05-31T11:39:19.823Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 50,
+      "sto": "STO 2"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "dfe0a695-be44-4eaf-b09e-397a7ebab233",
+    "timestamp": "2026-05-31T11:39:17.124Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "56b5652e-68ad-4266-8a33-ee2d766c74bc",
+    "timestamp": "2026-05-31T11:39:14.422Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 180,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "aebecbf0-5596-4552-9a66-20bc6d0b9a9b",
+    "timestamp": "2026-05-31T11:39:11.554Z",
+    "input": {
+      "status_hi": "Closed",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 20,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Rendah",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        1,
+        0,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "acb6fd38-e7d0-4b05-8d05-a237a682dbab",
+    "timestamp": "2026-05-31T11:39:09.475Z",
+    "input": {
+      "status_hi": "Rejected",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 50,
+      "sto": "RGT"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "497616fb-13ea-4790-ad9b-5d6b858a7002",
+    "timestamp": "2026-05-31T11:39:07.380Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 180,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "4ef9f735-0a40-491a-8f83-3234c7151922",
+    "timestamp": "2026-05-31T11:39:05.322Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "5177a60e-85bc-401c-8e4f-cbea0ad81db9",
+    "timestamp": "2026-05-31T11:39:03.168Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "2ca22f14-004a-4724-b041-7b2e0d1cd5f4",
+    "timestamp": "2026-05-31T11:39:01.012Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "1x24 jam",
+      "ttd_kb_num": 10,
+      "sto": "PBB"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "d1c452d6-2565-4947-a767-fbb2d1f569fd",
+    "timestamp": "2026-05-31T11:38:58.971Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "67a8189b-d653-40f6-88df-7acc2ce5b0b9",
+    "timestamp": "2026-05-31T11:38:56.885Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "1x24 jam",
+      "ttd_kb_num": 10,
+      "sto": "PBB"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "979c99d1-33e4-4b7b-98f6-c6e329c0eff8",
+    "timestamp": "2026-05-31T11:38:54.822Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 98,
+      "sto": "PBB"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "989701d1-9e7b-4dd5-bc7b-3a0d54e00548",
+    "timestamp": "2026-05-31T11:38:52.717Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "a03bfbcf-c9cd-4dd6-be86-2f8b68ac88e3",
+    "timestamp": "2026-05-31T11:38:50.264Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "2f83c1b2-1845-4d55-8399-b5184175347b",
+    "timestamp": "2026-05-31T11:38:46.912Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "7fb024e4-2f33-41d8-8aa4-67a043a3250b",
+    "timestamp": "2026-05-31T11:38:43.987Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 90,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "46db06cb-0678-44b8-a49b-20112d0d3eb8",
+    "timestamp": "2026-05-31T11:38:41.514Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 90,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "5634bc03-5470-446a-aa79-410130aef8b9",
+    "timestamp": "2026-05-31T11:38:22.551Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 85,
+      "sto": "RGT"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "a3c55fdf-a554-4266-956d-f12e2d2fb2f0",
+    "timestamp": "2026-05-31T11:38:20.273Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 90,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "2cbd903e-c36b-41a8-946a-c79f1c08f4a7",
+    "timestamp": "2026-05-31T11:38:18.050Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "20094f0c-bdb2-4a97-966a-8a6be0399e87",
+    "timestamp": "2026-05-31T11:38:15.722Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "1551aaff-d895-4742-b3fc-658d3e57633c",
+    "timestamp": "2026-05-31T11:38:13.441Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 120,
+      "sto": "RGT"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "e028eff7-3cf3-494a-9c5d-c8431c435e90",
+    "timestamp": "2026-05-31T11:38:10.812Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 60,
+      "sto": "PBB"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "1c99cc38-aa06-4251-a96e-b0c64536488e",
+    "timestamp": "2026-05-31T11:38:06.280Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "eaafed0f-4c25-4bbe-9f75-b3e6793ceccf",
+    "timestamp": "2026-05-31T11:38:04.026Z",
+    "input": {
+      "status_hi": "Closed",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 20,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Rendah",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        1,
+        0,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "c472f381-b471-430d-bc6a-8f483b75f4ac",
+    "timestamp": "2026-05-31T11:38:01.845Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "d94b51cb-0e1d-421e-a24a-df7d2189c513",
+    "timestamp": "2026-05-31T11:37:59.536Z",
+    "input": {
+      "status_hi": "Closed",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 20,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Rendah",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        1,
+        0,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "77a1bf48-6564-44e6-a3a9-2abbfb65e12e",
+    "timestamp": "2026-05-31T11:37:56.807Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "0fe9f2c5-654d-4bfd-8449-0cdcd2ee3fdb",
+    "timestamp": "2026-05-31T11:37:54.227Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "3651ce45-735b-47dd-8c51-ca44141754b5",
+    "timestamp": "2026-05-31T11:37:51.642Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "1x24 jam",
+      "ttd_kb_num": 100,
+      "sto": "PBB"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "85e65c1e-764d-437f-805d-7e7dd5ad071f",
+    "timestamp": "2026-05-31T11:37:48.838Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 20,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "ddf3b1d0-9dbe-456d-860b-5be7d06d0b9f",
+    "timestamp": "2026-05-31T11:37:45.781Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 30,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "e305bff6-a5b4-471b-9e69-b129c1329ff0",
+    "timestamp": "2026-05-31T11:37:43.327Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 50,
+      "sto": "STO 2"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "9abeb035-7135-4bb2-bd1a-90284c9b0ecc",
+    "timestamp": "2026-05-31T11:37:40.693Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "4ab0b037-7125-4484-849e-088fe56ec675",
+    "timestamp": "2026-05-31T11:37:37.912Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 180,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "03c5bd53-152f-4915-976c-5d71aa63b49d",
+    "timestamp": "2026-05-31T11:37:35.477Z",
+    "input": {
+      "status_hi": "Closed",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 20,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Rendah",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        1,
+        0,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "542072cf-c72d-4f6b-a64f-b9f93dcd9715",
+    "timestamp": "2026-05-31T11:37:32.683Z",
+    "input": {
+      "status_hi": "Rejected",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 50,
+      "sto": "RGT"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "1bde5895-7bd0-4fc3-bfb9-979b66954975",
+    "timestamp": "2026-05-31T11:37:30.257Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 180,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "523607bb-e282-4b2d-966b-568307463abf",
+    "timestamp": "2026-05-31T11:37:27.890Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "fb5c5d47-8c81-4024-a6a3-5018ee73bcb7",
+    "timestamp": "2026-05-31T11:37:25.402Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "ddb68dfc-e85a-4d6e-826b-710a9787eac4",
+    "timestamp": "2026-05-31T11:37:19.977Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "1x24 jam",
+      "ttd_kb_num": 10,
+      "sto": "PBB"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "86bd087e-a319-412f-9f8c-6e545e516824",
+    "timestamp": "2026-05-31T11:37:13.032Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "cda051a7-90ea-42ca-b3a1-48d614d10735",
+    "timestamp": "2026-05-31T11:37:10.142Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "1x24 jam",
+      "ttd_kb_num": 10,
+      "sto": "PBB"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "dfd06084-42a0-4c79-8243-e220793bade4",
+    "timestamp": "2026-05-31T11:37:05.757Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 98,
+      "sto": "PBB"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "3bfc01b4-7476-4ef6-a799-e9f273573bc4",
+    "timestamp": "2026-05-31T11:37:03.520Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "71b991cb-28d0-468e-b29d-020461684ee9",
+    "timestamp": "2026-05-31T11:37:01.281Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "a0597684-5c89-47c1-b0de-dbb800168147",
+    "timestamp": "2026-05-31T11:36:59.141Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "ff9d1e95-3727-4086-92aa-6512489beb87",
+    "timestamp": "2026-05-31T11:36:56.918Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 90,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "a0f02c5a-173a-4e51-9020-5447f351ebc1",
+    "timestamp": "2026-05-31T11:36:54.653Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 90,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "eba76a59-0461-405a-b5e7-691b166499f8",
+    "timestamp": "2026-05-31T11:36:43.001Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "1x24 jam",
+      "ttd_kb_num": 88,
+      "sto": "RGT"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "910bf61f-c9e0-4975-8d80-2a18980b7b38",
+    "timestamp": "2026-05-31T11:36:33.122Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 85,
+      "sto": "RGT"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "1eae74f6-dbc4-4c26-8af2-f6b5afe0d14f",
+    "timestamp": "2026-05-31T11:36:30.771Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 90,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "41995551-7e2b-4cec-a6a3-14e08f876b59",
+    "timestamp": "2026-05-31T11:36:28.440Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "0b215950-118f-4731-a468-669b9a79f410",
+    "timestamp": "2026-05-31T11:36:26.186Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "6b1234b1-0964-4a3f-8d1a-118bd2832e34",
+    "timestamp": "2026-05-31T11:36:23.471Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 120,
+      "sto": "RGT"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "2999574c-8681-4841-93e9-98a23193b7eb",
+    "timestamp": "2026-05-31T11:36:21.181Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 60,
+      "sto": "PBB"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "6cc0b946-8a37-410f-97a4-88e1ae3f39cb",
+    "timestamp": "2026-05-31T11:36:18.916Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "fa1c3d68-73c3-43c7-9f93-277aa265d483",
+    "timestamp": "2026-05-31T11:36:16.358Z",
+    "input": {
+      "status_hi": "Closed",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 20,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Rendah",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        1,
+        0,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "078e84eb-8a71-407b-9024-788b63ae3fa6",
+    "timestamp": "2026-05-31T11:36:13.725Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "039627c6-84d3-433f-a143-74bf888b89a4",
+    "timestamp": "2026-05-31T11:36:11.146Z",
+    "input": {
+      "status_hi": "Closed",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 20,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Rendah",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        1,
+        0,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "d7b13fc2-e254-49e9-a2ac-89af92ba1b87",
+    "timestamp": "2026-05-31T11:36:09.094Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "6f7e0cd9-2bd0-42aa-9c0a-9cdb61bba24d",
+    "timestamp": "2026-05-31T11:36:07.041Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "bf7639a4-d90d-4860-8a6c-e7ef59ace42f",
+    "timestamp": "2026-05-31T11:36:04.926Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "1x24 jam",
+      "ttd_kb_num": 100,
+      "sto": "PBB"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "b580b222-80f2-439a-ba69-95daa76fc642",
+    "timestamp": "2026-05-31T11:36:02.732Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 20,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "a23fceda-f39f-4f32-b489-2b896de631cd",
+    "timestamp": "2026-05-31T11:36:00.609Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 30,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "ed479e70-b0e0-49ab-9af7-f42a3d6a9477",
+    "timestamp": "2026-05-31T11:35:58.551Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 50,
+      "sto": "STO 2"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "5d76c543-200a-47fe-b0d5-1003d2efb065",
+    "timestamp": "2026-05-31T11:35:56.512Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "d37062bb-3817-4bce-a8e7-3757d6d2780e",
+    "timestamp": "2026-05-31T11:35:54.485Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 180,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "32aa3b08-c2f7-4ab3-ac28-397a055fc143",
+    "timestamp": "2026-05-31T11:35:52.483Z",
+    "input": {
+      "status_hi": "Closed",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 20,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Rendah",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        1,
+        0,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "93b629a8-d1dc-4e90-af47-744bacfaac95",
+    "timestamp": "2026-05-31T11:35:50.455Z",
+    "input": {
+      "status_hi": "Rejected",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 50,
+      "sto": "RGT"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "a6de74ed-08be-4c38-b838-9b326825cbfd",
+    "timestamp": "2026-05-31T11:35:48.430Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 180,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "c2797941-d472-46f0-88ba-ec54c21ec85e",
+    "timestamp": "2026-05-31T11:35:46.361Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "e19b0baa-ef75-4cec-acd9-723bb8f32a82",
+    "timestamp": "2026-05-31T11:35:44.282Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "e538e8ac-d1ff-4d17-890f-74029ef63d12",
+    "timestamp": "2026-05-31T11:35:42.259Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "1x24 jam",
+      "ttd_kb_num": 10,
+      "sto": "PBB"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "d6cdef12-d60b-4909-9a36-7e59af069968",
+    "timestamp": "2026-05-31T11:35:40.262Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "47a2cc47-5154-45de-b41f-8f55c62be11a",
+    "timestamp": "2026-05-31T11:35:38.154Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "1x24 jam",
+      "ttd_kb_num": 10,
+      "sto": "PBB"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "bc74133d-5bed-4d7e-bf09-ba51a938ef0b",
+    "timestamp": "2026-05-31T11:35:35.812Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 98,
+      "sto": "PBB"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "06fe7c40-df8b-42a7-a21d-fae8239c37e4",
+    "timestamp": "2026-05-31T11:35:33.740Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "4df69ebb-74a6-45cd-a55a-c672e55fabd8",
+    "timestamp": "2026-05-31T11:35:31.672Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "8b746e0c-d6a0-4a91-b6a4-3d88fc148aca",
+    "timestamp": "2026-05-31T11:35:29.613Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.95,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
+      "probabilities": [
+        0.05,
+        0.95,
+        0
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "921633ee-9371-4246-8516-02390776a87a",
+    "timestamp": "2026-05-31T11:35:27.398Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 90,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4957723696787002,
+        0,
+        0.5042276303212998,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "8fd55702-17ca-4b09-8922-157cc04aa19c",
+    "timestamp": "2026-05-31T11:35:25.334Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 90,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
       ],
       "feature_importances": [
         0.4957723696787002,
@@ -54,8 +2673,62 @@
     "user": "System"
   },
   {
+    "id": "9e9eb472-48c0-465a-9b8b-6f9418fd1172",
+    "timestamp": "2026-05-31T10:17:12.021Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 90,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.599) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4013826012480117,
+        0,
+        0.5986173987519884,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
     "id": "fdc1b589-c910-4e1f-a312-83dbf5e30d24",
     "timestamp": "2026-05-31T10:17:09.540Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 90,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.599) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.4013826012480117,
+        0,
+        0.5986173987519884,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "6b41e42b-7277-417f-8db6-ae15a5928bcd",
+    "timestamp": "2026-05-31T10:17:06.931Z",
     "input": {
       "status_hi": "In Progress",
       "ttic": "2x24 jam",
@@ -108,8 +2781,62 @@
     "user": "System"
   },
   {
+    "id": "de1ab946-fb90-4023-824c-c0af478bce7f",
+    "timestamp": "2026-05-31T09:00:13.684Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.9375,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: status_hi (importance=0.625) dengan confidence=0.938",
+      "probabilities": [
+        0.0625,
+        0.9375,
+        0
+      ],
+      "feature_importances": [
+        0.6248053969901401,
+        0,
+        0.3751946030098599,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
     "id": "b92eccde-b2f5-4929-9b97-3c4fa1eded55",
     "timestamp": "2026-05-31T08:56:34.511Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.9375,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: status_hi (importance=0.625) dengan confidence=0.938",
+      "probabilities": [
+        0.0625,
+        0.9375,
+        0
+      ],
+      "feature_importances": [
+        0.6248053969901401,
+        0,
+        0.3751946030098599,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "4dcedcd9-42fc-44f8-a85c-5505cdc61464",
+    "timestamp": "2026-05-31T08:11:53.135Z",
     "input": {
       "status_hi": "In Progress",
       "ttic": "2x24 jam",
@@ -162,6 +2889,33 @@
     "user": "System"
   },
   {
+    "id": "c7fa8657-2231-4238-8095-e3ed5186a889",
+    "timestamp": "2026-05-18T05:06:34.095Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 1,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.538) dengan confidence=1.0",
+      "probabilities": [
+        0,
+        1,
+        0
+      ],
+      "feature_importances": [
+        0.46153846153846156,
+        0,
+        0.5384615384615384,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
     "id": "4fcafa2f-be4a-4beb-9377-9e2a176c63c4",
     "timestamp": "2026-05-18T04:58:44.589Z",
     "input": {
@@ -189,395 +2943,35 @@
     "user": "System"
   },
   {
+    "id": "eeeb972a-c23d-4bac-8e6e-f6ae455ebb36",
+    "timestamp": "2026-05-18T04:58:24.893Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 98,
+      "sto": "PBB"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 1,
+      "reasoning": null,
+      "probabilities": [
+        0,
+        0,
+        1
+      ],
+      "feature_importances": [
+        0.46153846153846156,
+        0,
+        0.5384615384615384,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
     "id": "729338b8-1c6e-4a85-b51a-b75c189f7644",
     "timestamp": "2026-05-18T04:56:35.223Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": "2x24 jam",
-      "ttd_kb_num": 70,
-      "sto": "DUM"
-    },
-    "output": {
-      "prioritas": "Sedang",
-      "confidence": 1,
-      "reasoning": null,
-      "probabilities": [
-        0,
-        1,
-        0
-      ],
-      "feature_importances": [
-        0.46153846153846156,
-        0,
-        0.5384615384615384,
-        0
-      ]
-    },
-    "user": "System"
-  },
-  {
-    "id": "6e27e8c3-be65-4ecb-bafe-341228cf3a22",
-    "timestamp": "2026-05-18T04:45:48.337Z",
-    "input": {
-      "status_hi": "Closed",
-      "ttic": ">3x24 jam",
-      "ttd_kb_num": 20,
-      "sto": "PBR"
-    },
-    "output": {
-      "prioritas": "Rendah",
-      "confidence": 1,
-      "reasoning": null,
-      "probabilities": [
-        1,
-        0,
-        0
-      ],
-      "feature_importances": [
-        0.46153846153846156,
-        0,
-        0.5384615384615384,
-        0
-      ]
-    },
-    "user": "System"
-  },
-  {
-    "id": "efca9872-6fcb-492d-bbd9-f1bb3da2774e",
-    "timestamp": "2026-05-18T04:45:31.662Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": "2x24 jam",
-      "ttd_kb_num": 70,
-      "sto": "DUM"
-    },
-    "output": {
-      "prioritas": "Sedang",
-      "confidence": 1,
-      "reasoning": null,
-      "probabilities": [
-        0,
-        1,
-        0
-      ],
-      "feature_importances": [
-        0.46153846153846156,
-        0,
-        0.5384615384615384,
-        0
-      ]
-    },
-    "user": "System"
-  },
-  {
-    "id": "e23eacd9-ba5c-47c4-85b5-662c63fcb11a",
-    "timestamp": "2026-05-18T04:44:46.791Z",
-    "input": {
-      "status_hi": "Closed",
-      "ttic": ">3x24 jam",
-      "ttd_kb_num": 20,
-      "sto": "PBR"
-    },
-    "output": {
-      "prioritas": "Rendah",
-      "confidence": 1,
-      "reasoning": null,
-      "probabilities": [
-        1,
-        0,
-        0
-      ],
-      "feature_importances": [
-        0.46153846153846156,
-        0,
-        0.5384615384615384,
-        0
-      ]
-    },
-    "user": "System"
-  },
-  {
-    "id": "ccf86952-16f4-4381-914a-6e460fa8e8d0",
-    "timestamp": "2026-05-18T04:35:33.553Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": "2x24 jam",
-      "ttd_kb_num": 70,
-      "sto": "DUM"
-    },
-    "output": {
-      "prioritas": "Sedang",
-      "confidence": 1,
-      "reasoning": null,
-      "probabilities": [
-        0,
-        1,
-        0
-      ],
-      "feature_importances": [
-        0.46153846153846156,
-        0,
-        0.5384615384615384,
-        0
-      ]
-    },
-    "user": "System"
-  },
-  {
-    "id": "fb6753f6-5a67-47f6-9278-76598345ee57",
-    "timestamp": "2026-05-18T04:32:30.009Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": "2x24 jam",
-      "ttd_kb_num": 70,
-      "sto": "DUM"
-    },
-    "output": {
-      "prioritas": "Sedang",
-      "confidence": 1,
-      "reasoning": null,
-      "probabilities": [
-        0,
-        1,
-        0
-      ],
-      "feature_importances": [
-        0.46153846153846156,
-        0,
-        0.5384615384615384,
-        0
-      ]
-    },
-    "user": "System"
-  },
-  {
-    "id": "f698f28a-c0b9-47fe-8ec7-faf7dbd6a631",
-    "timestamp": "2026-05-04T06:21:31.105Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": "1x24 jam",
-      "ttd_kb_num": 100,
-      "sto": "PBB"
-    },
-    "output": {
-      "prioritas": "Tinggi",
-      "confidence": 0.98,
-      "reasoning": "SLA 1x24 jam merupakan prioritas tertinggi"
-    },
-    "user": "System"
-  },
-  {
-    "id": "22f42bc3-b592-4e24-8557-f872f009609a",
-    "timestamp": "2026-05-04T03:57:25.001Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": ">3x24 jam",
-      "ttd_kb_num": 20,
-      "sto": "PBR"
-    },
-    "output": {
-      "prioritas": "Sedang",
-      "confidence": 0.8,
-      "reasoning": "SLA >3x24 jam, masih dalam batas waktu"
-    },
-    "user": "System"
-  },
-  {
-    "id": "1d289fb1-cf22-4d83-8c36-4d689ab426d9",
-    "timestamp": "2026-05-04T03:56:56.818Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": ">3x24 jam",
-      "ttd_kb_num": 30,
-      "sto": "PBR"
-    },
-    "output": {
-      "prioritas": "Sedang",
-      "confidence": 0.8,
-      "reasoning": "SLA >3x24 jam, masih dalam batas waktu"
-    },
-    "user": "System"
-  },
-  {
-    "id": "a28e4eaf-c1ba-460b-8c2a-dd2f09a39be2",
-    "timestamp": "2026-05-04T03:41:43.893Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": ">3x24 jam",
-      "ttd_kb_num": 50,
-      "sto": "STO 2"
-    },
-    "output": {
-      "prioritas": "Sedang",
-      "confidence": 0.8,
-      "reasoning": "SLA >3x24 jam, masih dalam batas waktu"
-    },
-    "user": "System"
-  },
-  {
-    "id": "85a987af-a810-4c34-b63e-4f0974b30606",
-    "timestamp": "2026-05-04T03:42:41.199Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": "2x24 jam",
-      "ttd_kb_num": 70,
-      "sto": "DUM"
-    },
-    "output": {
-      "prioritas": "Sedang",
-      "confidence": 0.85,
-      "reasoning": "SLA 2x24 jam, kontrak standar"
-    },
-    "user": "System"
-  },
-  {
-    "id": "dce9e0c5-9bdc-4518-9176-4a2379a0ca7f",
-    "timestamp": "2026-05-04T03:57:10.162Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": ">3x24 jam",
-      "ttd_kb_num": 180,
-      "sto": "PBR"
-    },
-    "output": {
-      "prioritas": "Tinggi",
-      "confidence": 0.9,
-      "reasoning": "Overdue dengan kontrak pelanggan penting"
-    },
-    "user": "System"
-  },
-  {
-    "id": "55c8a0cc-2404-4cc4-a2e3-db397004301c",
-    "timestamp": "2026-05-04T03:57:32.280Z",
-    "input": {
-      "status_hi": "Closed",
-      "ttic": ">3x24 jam",
-      "ttd_kb_num": 20,
-      "sto": "PBR"
-    },
-    "output": {
-      "prioritas": "Rendah",
-      "confidence": 0.95,
-      "reasoning": "Kendala sudah ditutup atau ditolak"
-    },
-    "user": "System"
-  },
-  {
-    "id": "b78623dc-88fd-4356-a4f7-625662b52899",
-    "timestamp": "2026-05-04T05:22:17.795Z",
-    "input": {
-      "status_hi": "Rejected",
-      "ttic": "2x24 jam",
-      "ttd_kb_num": 50,
-      "sto": "RGT"
-    },
-    "output": {
-      "prioritas": "Rendah",
-      "confidence": 0.95,
-      "reasoning": "Kendala sudah ditutup atau ditolak"
-    },
-    "user": "System"
-  },
-  {
-    "id": "5bc89369-2732-45db-b615-88065f884c1f",
-    "timestamp": "2026-05-04T06:45:12.078Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": "2x24 jam",
-      "ttd_kb_num": 180,
-      "sto": "DUM"
-    },
-    "output": {
-      "prioritas": "Tinggi",
-      "confidence": 0.92,
-      "reasoning": "SLA 2x24 jam dengan kontrak pelanggan besar"
-    },
-    "user": "System"
-  },
-  {
-    "id": "f6e0829f-a257-44e2-b5b8-77ce1bc3961b",
-    "timestamp": "2026-05-18T04:34:44.559Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": "2x24 jam",
-      "ttd_kb_num": 70,
-      "sto": "DUM"
-    },
-    "output": {
-      "prioritas": "Sedang",
-      "confidence": 1,
-      "reasoning": null,
-      "probabilities": [
-        0,
-        1,
-        0
-      ],
-      "feature_importances": [
-        0.46153846153846156,
-        0,
-        0.5384615384615384,
-        0
-      ]
-    },
-    "user": "System"
-  },
-  {
-    "id": "26abc899-07d5-4eb1-92c5-4f6444ccab79",
-    "timestamp": "2026-05-18T04:44:43.154Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": "2x24 jam",
-      "ttd_kb_num": 70,
-      "sto": "DUM"
-    },
-    "output": {
-      "prioritas": "Sedang",
-      "confidence": 1,
-      "reasoning": null,
-      "probabilities": [
-        0,
-        1,
-        0
-      ],
-      "feature_importances": [
-        0.46153846153846156,
-        0,
-        0.5384615384615384,
-        0
-      ]
-    },
-    "user": "System"
-  },
-  {
-    "id": "52d7fc72-b807-4852-a531-2e883c8d4184",
-    "timestamp": "2026-05-18T04:44:50.367Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": "1x24 jam",
-      "ttd_kb_num": 10,
-      "sto": "PBB"
-    },
-    "output": {
-      "prioritas": "Sedang",
-      "confidence": 1,
-      "reasoning": null,
-      "probabilities": [
-        0,
-        1,
-        0
-      ],
-      "feature_importances": [
-        0.46153846153846156,
-        0,
-        0.5384615384615384,
-        0
-      ]
-    },
-    "user": "System"
-  },
-  {
-    "id": "cb6d59f1-fcfd-45ee-95c9-a73569241eb4",
-    "timestamp": "2026-05-18T04:45:45.437Z",
     "input": {
       "status_hi": "In Progress",
       "ttic": "2x24 jam",
@@ -630,216 +3024,414 @@
     "user": "System"
   },
   {
-    "id": "eeeb972a-c23d-4bac-8e6e-f6ae455ebb36",
-    "timestamp": "2026-05-18T04:58:24.893Z",
+    "id": "6e27e8c3-be65-4ecb-bafe-341228cf3a22",
+    "timestamp": "2026-05-18T04:45:48.337Z",
+    "input": {
+      "status_hi": "Closed",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 20,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Rendah",
+      "confidence": 1,
+      "reasoning": null,
+      "probabilities": [
+        1,
+        0,
+        0
+      ],
+      "feature_importances": [
+        0.46153846153846156,
+        0,
+        0.5384615384615384,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "cb6d59f1-fcfd-45ee-95c9-a73569241eb4",
+    "timestamp": "2026-05-18T04:45:45.437Z",
     "input": {
       "status_hi": "In Progress",
       "ttic": "2x24 jam",
-      "ttd_kb_num": 98,
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 1,
+      "reasoning": null,
+      "probabilities": [
+        0,
+        1,
+        0
+      ],
+      "feature_importances": [
+        0.46153846153846156,
+        0,
+        0.5384615384615384,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "efca9872-6fcb-492d-bbd9-f1bb3da2774e",
+    "timestamp": "2026-05-18T04:45:31.662Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 1,
+      "reasoning": null,
+      "probabilities": [
+        0,
+        1,
+        0
+      ],
+      "feature_importances": [
+        0.46153846153846156,
+        0,
+        0.5384615384615384,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "52d7fc72-b807-4852-a531-2e883c8d4184",
+    "timestamp": "2026-05-18T04:44:50.367Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "1x24 jam",
+      "ttd_kb_num": 10,
+      "sto": "PBB"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 1,
+      "reasoning": null,
+      "probabilities": [
+        0,
+        1,
+        0
+      ],
+      "feature_importances": [
+        0.46153846153846156,
+        0,
+        0.5384615384615384,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "e23eacd9-ba5c-47c4-85b5-662c63fcb11a",
+    "timestamp": "2026-05-18T04:44:46.791Z",
+    "input": {
+      "status_hi": "Closed",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 20,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Rendah",
+      "confidence": 1,
+      "reasoning": null,
+      "probabilities": [
+        1,
+        0,
+        0
+      ],
+      "feature_importances": [
+        0.46153846153846156,
+        0,
+        0.5384615384615384,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "26abc899-07d5-4eb1-92c5-4f6444ccab79",
+    "timestamp": "2026-05-18T04:44:43.154Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 1,
+      "reasoning": null,
+      "probabilities": [
+        0,
+        1,
+        0
+      ],
+      "feature_importances": [
+        0.46153846153846156,
+        0,
+        0.5384615384615384,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "ccf86952-16f4-4381-914a-6e460fa8e8d0",
+    "timestamp": "2026-05-18T04:35:33.553Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 1,
+      "reasoning": null,
+      "probabilities": [
+        0,
+        1,
+        0
+      ],
+      "feature_importances": [
+        0.46153846153846156,
+        0,
+        0.5384615384615384,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "f6e0829f-a257-44e2-b5b8-77ce1bc3961b",
+    "timestamp": "2026-05-18T04:34:44.559Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 1,
+      "reasoning": null,
+      "probabilities": [
+        0,
+        1,
+        0
+      ],
+      "feature_importances": [
+        0.46153846153846156,
+        0,
+        0.5384615384615384,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "fb6753f6-5a67-47f6-9278-76598345ee57",
+    "timestamp": "2026-05-18T04:32:30.009Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 1,
+      "reasoning": null,
+      "probabilities": [
+        0,
+        1,
+        0
+      ],
+      "feature_importances": [
+        0.46153846153846156,
+        0,
+        0.5384615384615384,
+        0
+      ]
+    },
+    "user": "System"
+  },
+  {
+    "id": "5bc89369-2732-45db-b615-88065f884c1f",
+    "timestamp": "2026-05-04T06:45:12.078Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 180,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 0.92,
+      "reasoning": "SLA 2x24 jam dengan kontrak pelanggan besar"
+    },
+    "user": "System"
+  },
+  {
+    "id": "f698f28a-c0b9-47fe-8ec7-faf7dbd6a631",
+    "timestamp": "2026-05-04T06:21:31.105Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "1x24 jam",
+      "ttd_kb_num": 100,
+      "sto": "PBB"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 0.98,
+      "reasoning": "SLA 1x24 jam merupakan prioritas tertinggi"
+    },
+    "user": "System"
+  },
+  {
+    "id": "b78623dc-88fd-4356-a4f7-625662b52899",
+    "timestamp": "2026-05-04T05:22:17.795Z",
+    "input": {
+      "status_hi": "Rejected",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 50,
+      "sto": "RGT"
+    },
+    "output": {
+      "prioritas": "Rendah",
+      "confidence": 0.95,
+      "reasoning": "Kendala sudah ditutup atau ditolak"
+    },
+    "user": "System"
+  },
+  {
+    "id": "55c8a0cc-2404-4cc4-a2e3-db397004301c",
+    "timestamp": "2026-05-04T03:57:32.280Z",
+    "input": {
+      "status_hi": "Closed",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 20,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Rendah",
+      "confidence": 0.95,
+      "reasoning": "Kendala sudah ditutup atau ditolak"
+    },
+    "user": "System"
+  },
+  {
+    "id": "22f42bc3-b592-4e24-8557-f872f009609a",
+    "timestamp": "2026-05-04T03:57:25.001Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 20,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.8,
+      "reasoning": "SLA >3x24 jam, masih dalam batas waktu"
+    },
+    "user": "System"
+  },
+  {
+    "id": "dce9e0c5-9bdc-4518-9176-4a2379a0ca7f",
+    "timestamp": "2026-05-04T03:57:10.162Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 180,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Tinggi",
+      "confidence": 0.9,
+      "reasoning": "Overdue dengan kontrak pelanggan penting"
+    },
+    "user": "System"
+  },
+  {
+    "id": "1d289fb1-cf22-4d83-8c36-4d689ab426d9",
+    "timestamp": "2026-05-04T03:56:56.818Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 30,
+      "sto": "PBR"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.8,
+      "reasoning": "SLA >3x24 jam, masih dalam batas waktu"
+    },
+    "user": "System"
+  },
+  {
+    "id": "85a987af-a810-4c34-b63e-4f0974b30606",
+    "timestamp": "2026-05-04T03:42:41.199Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 70,
+      "sto": "DUM"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.85,
+      "reasoning": "SLA 2x24 jam, kontrak standar"
+    },
+    "user": "System"
+  },
+  {
+    "id": "a28e4eaf-c1ba-460b-8c2a-dd2f09a39be2",
+    "timestamp": "2026-05-04T03:41:43.893Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": ">3x24 jam",
+      "ttd_kb_num": 50,
+      "sto": "STO 2"
+    },
+    "output": {
+      "prioritas": "Sedang",
+      "confidence": 0.8,
+      "reasoning": "SLA >3x24 jam, masih dalam batas waktu"
+    },
+    "user": "System"
+  },
+  {
+    "id": "7c421820-c156-4672-a6ae-517066379ee5",
+    "timestamp": "2026-05-31T14:32:32.798Z",
+    "input": {
+      "status_hi": "In Progress",
+      "ttic": "2x24 jam",
+      "ttd_kb_num": 179,
       "sto": "PBB"
     },
     "output": {
       "prioritas": "Tinggi",
       "confidence": 1,
-      "reasoning": null,
+      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.618) dengan confidence=1.0",
       "probabilities": [
         0,
         0,
         1
       ],
       "feature_importances": [
-        0.46153846153846156,
+        0.38162712690266903,
         0,
-        0.5384615384615384,
-        0
-      ]
-    },
-    "user": "System"
-  },
-  {
-    "id": "c7fa8657-2231-4238-8095-e3ed5186a889",
-    "timestamp": "2026-05-18T05:06:34.095Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": "2x24 jam",
-      "ttd_kb_num": 70,
-      "sto": "DUM"
-    },
-    "output": {
-      "prioritas": "Sedang",
-      "confidence": 1,
-      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.538) dengan confidence=1.0",
-      "probabilities": [
-        0,
-        1,
-        0
-      ],
-      "feature_importances": [
-        0.46153846153846156,
-        0,
-        0.5384615384615384,
-        0
-      ]
-    },
-    "user": "System"
-  },
-  {
-    "id": "4dcedcd9-42fc-44f8-a85c-5505cdc61464",
-    "timestamp": "2026-05-31T08:11:53.135Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": "2x24 jam",
-      "ttd_kb_num": 70,
-      "sto": "DUM"
-    },
-    "output": {
-      "prioritas": "Sedang",
-      "confidence": 0.9375,
-      "reasoning": "Prediksi berdasar fitur paling berpengaruh: status_hi (importance=0.625) dengan confidence=0.938",
-      "probabilities": [
-        0.0625,
-        0.9375,
-        0
-      ],
-      "feature_importances": [
-        0.6248053969901401,
-        0,
-        0.3751946030098599,
-        0
-      ]
-    },
-    "user": "System"
-  },
-  {
-    "id": "de1ab946-fb90-4023-824c-c0af478bce7f",
-    "timestamp": "2026-05-31T09:00:13.684Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": "2x24 jam",
-      "ttd_kb_num": 70,
-      "sto": "DUM"
-    },
-    "output": {
-      "prioritas": "Sedang",
-      "confidence": 0.9375,
-      "reasoning": "Prediksi berdasar fitur paling berpengaruh: status_hi (importance=0.625) dengan confidence=0.938",
-      "probabilities": [
-        0.0625,
-        0.9375,
-        0
-      ],
-      "feature_importances": [
-        0.6248053969901401,
-        0,
-        0.3751946030098599,
-        0
-      ]
-    },
-    "user": "System"
-  },
-  {
-    "id": "6b41e42b-7277-417f-8db6-ae15a5928bcd",
-    "timestamp": "2026-05-31T10:17:06.931Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": "2x24 jam",
-      "ttd_kb_num": 90,
-      "sto": "DUM"
-    },
-    "output": {
-      "prioritas": "Tinggi",
-      "confidence": 1,
-      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.599) dengan confidence=1.0",
-      "probabilities": [
-        0,
-        0,
-        1
-      ],
-      "feature_importances": [
-        0.4013826012480117,
-        0,
-        0.5986173987519884,
-        0
-      ]
-    },
-    "user": "System"
-  },
-  {
-    "id": "9e9eb472-48c0-465a-9b8b-6f9418fd1172",
-    "timestamp": "2026-05-31T10:17:12.021Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": "2x24 jam",
-      "ttd_kb_num": 90,
-      "sto": "DUM"
-    },
-    "output": {
-      "prioritas": "Tinggi",
-      "confidence": 1,
-      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.599) dengan confidence=1.0",
-      "probabilities": [
-        0,
-        0,
-        1
-      ],
-      "feature_importances": [
-        0.4013826012480117,
-        0,
-        0.5986173987519884,
-        0
-      ]
-    },
-    "user": "System"
-  },
-  {
-    "id": "98155295-254a-4a92-a048-0b5ea32e3ea8",
-    "timestamp": "2026-05-31T11:22:56.288Z",
-    "input": {
-      "status_hi": "In Progress",
-      "ttic": "1x24 jam",
-      "ttd_kb_num": 3,
-      "sto": "PBR"
-    },
-    "output": {
-      "prioritas": "Sedang",
-      "confidence": 0.95,
-      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=0.95",
-      "probabilities": [
-        0.05,
-        0.95,
-        0
-      ],
-      "feature_importances": [
-        0.4957723696787002,
-        0,
-        0.5042276303212998,
-        0
-      ]
-    },
-    "user": "System"
-  },
-  {
-    "id": "6414914c-3246-437d-9d41-0ac285d9aee8",
-    "timestamp": "2026-05-31T11:23:06.730Z",
-    "input": {
-      "status_hi": "Closed",
-      "ttic": "2x24 jam",
-      "ttd_kb_num": 2,
-      "sto": "DUM"
-    },
-    "output": {
-      "prioritas": "Rendah",
-      "confidence": 1,
-      "reasoning": "Prediksi berdasar fitur paling berpengaruh: ttd_kb_num (importance=0.504) dengan confidence=1.0",
-      "probabilities": [
-        1,
-        0,
-        0
-      ],
-      "feature_importances": [
-        0.4957723696787002,
-        0,
-        0.5042276303212998,
+        0.6183728730973309,
         0
       ]
     },

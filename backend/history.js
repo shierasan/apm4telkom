@@ -47,10 +47,49 @@ class HistoryManager {
         try {
             const data = fs.readFileSync(HISTORY_FILE, 'utf8');
             const history = JSON.parse(data);
-            return history.slice(-limit).reverse();
+            return history
+                .slice()
+                .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+                .slice(0, limit);
         } catch (error) {
             console.error('Error reading history:', error);
             return [];
+        }
+    }
+
+    /** Ambil history dengan pagination dan filter opsional. */
+    getHistoryPage({ page = 1, limit = 25, priority = '' } = {}) {
+        try {
+            const normalizedPage = Math.max(1, parseInt(page, 10) || 1);
+            const normalizedLimit = Math.max(1, parseInt(limit, 10) || 25);
+            let history = this.getHistory(1000);
+
+            if (priority) {
+                history = history.filter(record => record.output?.prioritas === priority);
+            }
+
+            const total = history.length;
+            const totalPages = Math.max(1, Math.ceil(total / normalizedLimit));
+            const currentPage = Math.min(normalizedPage, totalPages);
+            const start = (currentPage - 1) * normalizedLimit;
+            const data = history.slice(start, start + normalizedLimit);
+
+            return {
+                data,
+                total,
+                page: currentPage,
+                limit: normalizedLimit,
+                totalPages
+            };
+        } catch (error) {
+            console.error('Error reading paged history:', error);
+            return {
+                data: [],
+                total: 0,
+                page: 1,
+                limit: 25,
+                totalPages: 1
+            };
         }
     }
 
@@ -119,6 +158,20 @@ class HistoryManager {
         }
     }
 
+    /** Hapus banyak record sekaligus. */
+    deleteRecords(recordIds = []) {
+        try {
+            const ids = new Set((recordIds || []).filter(Boolean));
+            let history = this.getHistory(1000);
+            history = history.filter(record => !ids.has(record.id));
+            fs.writeFileSync(HISTORY_FILE, JSON.stringify(history, null, 2));
+            return true;
+        } catch (error) {
+            console.error('Error deleting records:', error);
+            return false;
+        }
+    }
+
     /** Export history ke CSV. */
     exportToCSV() {
         try {
@@ -128,12 +181,18 @@ class HistoryManager {
                 return 'No data to export';
             }
 
-            let csv = 'ID,Timestamp,Status,TTIC,TTD KB,STO,Prioritas,Confidence,Reasoning\n';
+            const lines = [
+                'LAPORAN RIWAYAT KLASIFIKASI',
+                `Generated At,"${new Date().toLocaleString('id-ID').replace(/"/g, '""')}"`,
+                `Total Records,${history.length}`,
+                '',
+                'No,Timestamp,Status HI,TTIC,TTD KB,STO,Prioritas,Confidence,Alasan'
+            ];
 
-            history.forEach(record => {
+            history.forEach((record, index) => {
                 const { id, timestamp, input, output } = record;
                 const row = [
-                    id,
+                    index + 1,
                     timestamp,
                     input.status_hi || '',
                     input.ttic || '',
@@ -141,16 +200,24 @@ class HistoryManager {
                     input.sto || '',
                     output.prioritas || '',
                     output.confidence || '',
-                    (output.reasoning || '').replace(/,/g, ';')
-                ].join(',');
-                csv += row + '\n';
+                    output.reasoning || ''
+                ].map(value => this.escapeCsvCell(value)).join(',');
+                lines.push(row);
             });
 
-            return csv;
+            return lines.join('\n');
         } catch (error) {
             console.error('Error exporting to CSV:', error);
             throw error;
         }
+    }
+
+    escapeCsvCell(value) {
+        const text = String(value ?? '');
+        if (/[",\n]/.test(text)) {
+            return '"' + text.replace(/"/g, '""') + '"';
+        }
+        return text;
     }
 
     /** Clear semua history (untuk development). */

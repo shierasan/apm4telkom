@@ -340,13 +340,19 @@ app.post('/api/classify/batch', authMiddleware, (req, res) => {
  */
 app.get('/api/history', authMiddleware, (req, res) => {
     try {
-        const limit = req.query.limit ? parseInt(req.query.limit) : 100;
-        const history = historyManager.getHistory(limit);
+        const page = req.query.page ? parseInt(req.query.page, 10) : 1;
+        const limit = req.query.limit ? parseInt(req.query.limit, 10) : 25;
+        const priority = String(req.query.priority || '').trim();
+        const paged = historyManager.getHistoryPage({ page, limit, priority });
 
         res.json({
             success: true,
-            count: history.length,
-            data: history
+            count: paged.data.length,
+            total: paged.total,
+            page: paged.page,
+            limit: paged.limit,
+            totalPages: paged.totalPages,
+            data: paged.data
         });
     } catch (error) {
         console.error('Error in /api/history:', error);
@@ -370,13 +376,19 @@ app.get('/api/history/priority/:priority', authMiddleware, (req, res) => {
             });
         }
 
-        const history = historyManager.getHistoryByPriority(priority);
+        const page = req.query.page ? parseInt(req.query.page, 10) : 1;
+        const limit = req.query.limit ? parseInt(req.query.limit, 10) : 25;
+        const paged = historyManager.getHistoryPage({ page, limit, priority });
 
         res.json({
             success: true,
             priority,
-            count: history.length,
-            data: history
+            count: paged.data.length,
+            total: paged.total,
+            page: paged.page,
+            limit: paged.limit,
+            totalPages: paged.totalPages,
+            data: paged.data
         });
     } catch (error) {
         console.error('Error in /api/history/priority:', error);
@@ -404,6 +416,152 @@ app.get('/api/statistics', authMiddleware, (req, res) => {
         });
     }
 });
+
+function getHistoryReportMeta(history) {
+    const total = history.length;
+    const byPriority = history.reduce((acc, record) => {
+        const priority = record.output?.prioritas || '-';
+        acc[priority] = (acc[priority] || 0) + 1;
+        return acc;
+    }, { Tinggi: 0, Sedang: 0, Rendah: 0 });
+
+    return {
+        title: 'LAPORAN RIWAYAT KLASIFIKASI',
+        generatedAt: new Date().toLocaleString('id-ID'),
+        total,
+        byPriority
+    };
+}
+
+function getHistoryReportRows(history) {
+    return history.map((record, index) => ({
+        no: index + 1,
+        timestamp: new Date(record.timestamp).toLocaleString('id-ID'),
+        status_hi: record.input?.status_hi || '-',
+        ttic: record.input?.ttic || '-',
+        ttd_kb_num: record.input?.ttd_kb_num ?? '-',
+        sto: record.input?.sto || '-',
+        prioritas: record.output?.prioritas || '-',
+        confidence: `${Math.round((record.output?.confidence || 0) * 100)}%`,
+        reasoning: record.output?.reasoning || '-'
+    }));
+}
+
+function styleWorksheetCell(cell, options = {}) {
+    if (options.fill) cell.fill = options.fill;
+    if (options.font) cell.font = options.font;
+    if (options.alignment) cell.alignment = options.alignment;
+    if (options.border) cell.border = options.border;
+}
+
+function getTableBorder() {
+    return {
+        top: { style: 'thin', color: { argb: 'FFD9D9D9' } },
+        left: { style: 'thin', color: { argb: 'FFD9D9D9' } },
+        bottom: { style: 'thin', color: { argb: 'FFD9D9D9' } },
+        right: { style: 'thin', color: { argb: 'FFD9D9D9' } }
+    };
+}
+
+function drawPdfHeader(doc, meta) {
+    const pageWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
+    const headerHeight = 78;
+    const x = doc.page.margins.left;
+    const y = doc.y;
+
+    doc.save();
+    doc.rect(x, y, pageWidth, headerHeight).fill('#d72626');
+    doc.fillColor('#ffffff');
+    doc.font('Helvetica-Bold').fontSize(18).text(meta.title, x, y + 16, {
+        align: 'center',
+        width: pageWidth
+    });
+    doc.font('Helvetica').fontSize(9).text(`Tanggal Laporan: ${meta.generatedAt}`, x, y + 42, {
+        align: 'center',
+        width: pageWidth
+    });
+    doc.restore();
+    doc.y = y + headerHeight + 14;
+}
+
+function drawPdfSummary(doc, meta) {
+    const pageWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
+    const boxY = doc.y;
+    const boxHeight = 38;
+    const x = doc.page.margins.left;
+
+    doc.save();
+    doc.roundedRect(x, boxY, pageWidth, boxHeight, 8).fillAndStroke('#f8fafc', '#e5e7eb');
+    doc.fillColor('#111827').font('Helvetica-Bold').fontSize(10).text(`Total Data: ${meta.total} records`, x + 12, boxY + 12);
+    doc.fillColor('#6b7280').font('Helvetica').fontSize(8.5).text(`Tinggi: ${meta.byPriority.Tinggi}  |  Sedang: ${meta.byPriority.Sedang}  |  Rendah: ${meta.byPriority.Rendah}`, x + 12, boxY + 24);
+    doc.restore();
+    doc.y = boxY + boxHeight + 12;
+}
+
+function drawPdfTableHeader(doc, columns, widths) {
+    const x = doc.page.margins.left;
+    let cursorX = x;
+    const y = doc.y;
+    const headerHeight = 24;
+
+    for (let i = 0; i < columns.length; i++) {
+        doc.rect(cursorX, y, widths[i], headerHeight).fillAndStroke('#d72626', '#b91c1c');
+        doc.fillColor('#ffffff').font('Helvetica-Bold').fontSize(8.5).text(columns[i], cursorX + 4, y + 7, {
+            width: widths[i] - 8,
+            align: 'center'
+        });
+        cursorX += widths[i];
+    }
+
+    doc.y = y + headerHeight;
+}
+
+function drawPdfTableRow(doc, row, widths, columns) {
+    const x = doc.page.margins.left;
+    const values = [row.no, row.timestamp, row.status_hi, row.ttic, row.ttd_kb_num, row.sto, row.prioritas, row.confidence, row.reasoning];
+    const rowPadding = 4;
+    const rowHeight = 22;
+    let rowY = doc.y;
+
+    if (rowY + rowHeight > doc.page.height - doc.page.margins.bottom - 24) {
+        doc.addPage({ size: 'A4', layout: 'landscape', margin: 40 });
+        doc.fillColor('#111827');
+        drawPdfTableHeader(doc, columns, widths);
+        rowY = doc.y;
+    }
+
+    let cursorX = x;
+    for (let i = 0; i < values.length; i++) {
+        doc.rect(cursorX, rowY, widths[i], rowHeight).stroke('#d1d5db');
+        const cellText = truncatePdfCell(values[i], widths[i], i);
+        doc.save();
+        doc.fillColor('#111827').font('Helvetica').fontSize(8);
+        doc.rect(cursorX + 1, rowY + 1, widths[i] - 2, rowHeight - 2).clip();
+        doc.text(cellText, cursorX + rowPadding, rowY + 6, {
+            width: widths[i] - rowPadding * 2,
+            height: rowHeight - 8,
+            align: i === 0 || i === 4 || i === 7 ? 'center' : 'left',
+            lineBreak: false,
+            paragraphGap: 0,
+            wordSpacing: 0,
+            characterSpacing: 0,
+            ellipsis: true
+        });
+        doc.restore();
+        cursorX += widths[i];
+    }
+
+    doc.y = rowY + rowHeight;
+}
+
+function truncatePdfCell(value, width, index) {
+    const text = String(value ?? '').replace(/\s+/g, ' ').trim();
+    const limits = [6, 24, 16, 14, 10, 12, 12, 10, 42];
+    const limit = limits[index] || 20;
+    if (!text) return '-';
+    if (text.length <= limit) return text;
+    return `${text.slice(0, Math.max(0, limit - 1))}…`;
+}
 
 /**
  * GET /api/evaluation - Ambil metrik evaluasi model
@@ -491,7 +649,7 @@ app.get('/api/export/csv', authMiddleware, (req, res) => {
         const csv = historyManager.exportToCSV();
 
         res.setHeader('Content-Type', 'text/csv');
-        res.setHeader('Content-Disposition', 'attachment; filename="kendala_history.csv"');
+        res.setHeader('Content-Disposition', 'attachment; filename="laporan_riwayat_klasifikasi.csv"');
         res.send(csv);
 
     } catch (error) {
@@ -513,37 +671,85 @@ app.get('/api/export/xlsx', authMiddleware, async (req, res) => {
             return res.status(400).json({ error: 'No data to export' });
         }
 
+        const meta = getHistoryReportMeta(history);
+        const rows = getHistoryReportRows(history);
         const workbook = new ExcelJS.Workbook();
         const sheet = workbook.addWorksheet('Riwayat');
 
         sheet.columns = [
-            { header: 'ID', key: 'id', width: 36 },
-            { header: 'Timestamp', key: 'timestamp', width: 30 },
-            { header: 'Status', key: 'status', width: 15 },
-            { header: 'TTIC', key: 'ttic', width: 20 },
-            { header: 'TTD KB', key: 'ttd', width: 10 },
-            { header: 'STO', key: 'sto', width: 10 },
-            { header: 'Prioritas', key: 'prioritas', width: 12 },
+            { header: 'No', key: 'no', width: 6 },
+            { header: 'Timestamp', key: 'timestamp', width: 26 },
+            { header: 'Status HI', key: 'status_hi', width: 16 },
+            { header: 'TTIC', key: 'ttic', width: 18 },
+            { header: 'TTD KB', key: 'ttd_kb_num', width: 12 },
+            { header: 'STO', key: 'sto', width: 12 },
+            { header: 'Prioritas', key: 'prioritas', width: 14 },
             { header: 'Confidence', key: 'confidence', width: 12 },
-            { header: 'Reasoning', key: 'reasoning', width: 50 }
+            { header: 'Alasan', key: 'reasoning', width: 48 }
         ];
 
-        history.forEach(record => {
-            sheet.addRow({
-                id: record.id,
-                timestamp: record.timestamp,
-                status: record.input.status_hi || '',
-                ttic: record.input.ttic || '',
-                ttd: record.input.ttd_kb_num || '',
-                sto: record.input.sto || '',
-                prioritas: record.output.prioritas || '',
-                confidence: record.output.confidence || '',
-                reasoning: record.output.reasoning || ''
+        sheet.mergeCells('A1:I1');
+        sheet.getCell('A1').value = meta.title;
+        styleWorksheetCell(sheet.getCell('A1'), {
+            fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFD72626' } },
+            font: { bold: true, color: { argb: 'FFFFFFFF' }, size: 16 },
+            alignment: { horizontal: 'center', vertical: 'middle' }
+        });
+
+        sheet.mergeCells('A2:I2');
+        sheet.getCell('A2').value = `Tanggal Laporan: ${meta.generatedAt}`;
+        styleWorksheetCell(sheet.getCell('A2'), {
+            fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFEE2E2' } },
+            font: { italic: true, color: { argb: 'FF7F1D1D' } },
+            alignment: { horizontal: 'center' }
+        });
+
+        sheet.mergeCells('A3:I3');
+        sheet.getCell('A3').value = `Total Data: ${meta.total} records | Tinggi: ${meta.byPriority.Tinggi} | Sedang: ${meta.byPriority.Sedang} | Rendah: ${meta.byPriority.Rendah}`;
+        styleWorksheetCell(sheet.getCell('A3'), {
+            font: { bold: true, color: { argb: 'FF374151' } },
+            alignment: { horizontal: 'center' }
+        });
+
+        sheet.getRow(5).values = ['No', 'Timestamp', 'Status HI', 'TTIC', 'TTD KB', 'STO', 'Prioritas', 'Confidence', 'Alasan'];
+        sheet.getRow(5).font = { bold: true, color: { argb: 'FFFFFFFF' } };
+        sheet.getRow(5).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFD72626' } };
+        sheet.getRow(5).alignment = { horizontal: 'center', vertical: 'middle' };
+        sheet.getRow(5).height = 22;
+
+        rows.forEach(row => {
+            const added = sheet.addRow(row);
+            added.alignment = { vertical: 'top', wrapText: true };
+            added.eachCell((cell) => {
+                styleWorksheetCell(cell, {
+                    border: getTableBorder(),
+                    alignment: { vertical: 'top', wrapText: true }
+                });
             });
         });
 
+        sheet.getRow(5).eachCell((cell) => {
+            styleWorksheetCell(cell, {
+                border: getTableBorder(),
+                alignment: { horizontal: 'center', vertical: 'middle' }
+            });
+        });
+
+        sheet.autoFilter = {
+            from: 'A5',
+            to: 'I5'
+        };
+
+        sheet.views = [{ state: 'frozen', ySplit: 5 }];
+
+        sheet.eachRow((row, rowNumber) => {
+            if (rowNumber >= 6) {
+                row.height = 20;
+            }
+        });
+
         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        res.setHeader('Content-Disposition', 'attachment; filename="kendala_history.xlsx"');
+        res.setHeader('Content-Disposition', 'attachment; filename="laporan_riwayat_klasifikasi.xlsx"');
 
         await workbook.xlsx.write(res);
         res.end();
@@ -564,43 +770,22 @@ app.get('/api/export/pdf', authMiddleware, (req, res) => {
             return res.status(400).json({ error: 'No data to export' });
         }
 
-        const doc = new PDFDocument({ margin: 40, size: 'A4' });
+        const meta = getHistoryReportMeta(history);
+        const rows = getHistoryReportRows(history);
+        const doc = new PDFDocument({ margin: 40, size: 'A4', layout: 'landscape' });
         res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'attachment; filename="kendala_history.pdf"');
+        res.setHeader('Content-Disposition', 'attachment; filename="laporan_riwayat_klasifikasi.pdf"');
 
         doc.pipe(res);
 
-        doc.fontSize(16).text('Kendala History', { align: 'center' });
-        doc.moveDown(1);
+        drawPdfHeader(doc, meta);
+        drawPdfSummary(doc, meta);
 
-        const tableTop = 100;
-        const itemHeight = 18;
-        let y = tableTop;
+        const columns = ['No', 'Timestamp', 'Status HI', 'TTIC', 'TTD KB', 'STO', 'Prioritas', 'Confidence', 'Alasan'];
+        const widths = [30, 100, 70, 70, 55, 45, 65, 60, 266];
 
-        // Header
-        doc.fontSize(10).text('Timestamp', 40, y);
-        doc.text('Status', 150, y);
-        doc.text('TTIC', 220, y);
-        doc.text('TTD', 280, y);
-        doc.text('Prioritas', 330, y);
-        doc.text('Confidence', 420, y);
-        y += itemHeight;
-
-        history.forEach((record) => {
-            if (y > doc.page.height - 60) {
-                doc.addPage();
-                y = 60;
-            }
-
-            doc.fontSize(9).text(new Date(record.timestamp).toLocaleString(), 40, y, { width: 100 });
-            doc.text(record.input.status_hi || '-', 150, y, { width: 60 });
-            doc.text(record.input.ttic || '-', 220, y, { width: 50 });
-            doc.text(String(record.input.ttd_kb_num || '-'), 280, y, { width: 40 });
-            doc.text(record.output.prioritas || '-', 330, y, { width: 80 });
-            doc.text(String(Math.round((record.output.confidence || 0) * 100) + '%'), 420, y, { width: 60 });
-
-            y += itemHeight;
-        });
+        drawPdfTableHeader(doc, columns, widths);
+        rows.forEach((row) => drawPdfTableRow(doc, row, widths, columns));
 
         doc.end();
     } catch (error) {
@@ -653,6 +838,29 @@ app.delete('/api/history/:recordId', authMiddleware, (req, res) => {
         res.status(500).json({
             error: error.message
         });
+    }
+});
+
+/**
+ * DELETE /api/history - Hapus beberapa record sekaligus
+ * Body: { ids: ["id1", "id2", ...] }
+ */
+app.delete('/api/history', authMiddleware, (req, res) => {
+    try {
+        const ids = Array.isArray(req.body?.ids) ? req.body.ids : [];
+        if (!ids.length) {
+            return res.status(400).json({ error: 'ids kosong. Kirim body.ids berupa array' });
+        }
+
+        const deleted = historyManager.deleteRecords(ids);
+        if (deleted) {
+            return res.json({ success: true, message: 'Selected records deleted successfully', deletedCount: ids.length });
+        }
+
+        res.status(404).json({ error: 'Records not found' });
+    } catch (error) {
+        console.error('Error in DELETE /api/history batch:', error);
+        res.status(500).json({ error: error.message });
     }
 });
 

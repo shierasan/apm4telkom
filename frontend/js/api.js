@@ -31,7 +31,13 @@
     getStatistics: () => request('/statistics'),
     getHistory: (limit=100) => request(`/history?limit=${limit}`),
     getHistoryByPriority: (p) => request(`/history/priority/${encodeURIComponent(p)}`),
+    getHistoryPage: ({ page = 1, limit = 25, priority = '' } = {}) => {
+      const params = new URLSearchParams({ page: String(page), limit: String(limit) });
+      if (priority) params.set('priority', priority);
+      return request(`/history?${params.toString()}`);
+    },
     deleteRecord: (id) => request(`/history/${id}`, { method: 'DELETE' }),
+    deleteRecords: (ids) => request('/history', { method: 'DELETE', body: JSON.stringify({ ids }) }),
     exportCsv: () => request('/export/csv'),
     exportXlsx: () => request('/export/xlsx'),
     exportPdf: () => request('/export/pdf'),

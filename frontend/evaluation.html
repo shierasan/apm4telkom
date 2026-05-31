@@ -37,11 +37,29 @@
         <section class="page-hero"><h1 class="page-title">Evaluasi Performa Model</h1><p class="page-subtitle">Halaman ini menampilkan hasil training terbaru. Jika data history bertambah, model akan di-refresh otomatis.</p></section>
 
         <section class="page-section">
+          <div class="card card-soft p-3 info-panel">
+            <div class="d-flex align-items-start gap-3">
+              <div class="info-panel-icon"><i class="fas fa-circle-info"></i></div>
+              <div>
+                <h5 class="mb-1">Apa yang dievaluasi?</h5>
+                <p class="mb-2 text-muted">Evaluasi ini membandingkan model pohon keputusan terbaik dengan depth lain, lalu menampilkan fitur paling berpengaruh dan parameter model yang terpilih.</p>
+                <div class="d-flex flex-wrap gap-2">
+                  <span class="badge rounded-pill text-bg-light border">Akurasi terbaik = skor F1 macro terbaik hasil training</span>
+                  <span class="badge rounded-pill text-bg-light border">CV scores = skor per fold validasi silang</span>
+                  <span class="badge rounded-pill text-bg-light border">Model params = setting model yang dipakai</span>
+                  <span class="badge rounded-pill text-bg-light border">Samples = jumlah data history yang dipakai</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="page-section">
           <div class="row g-3">
-            <div class="col-md-3"><div class="stat-card card-soft h-100"><div class="stat-icon"><i class="fas fa-signal"></i></div><div class="stat-content"><h6 class="stat-label">Akurasi Terbaik</h6><h2 class="stat-value" id="evalAccuracy">-</h2></div></div></div>
-            <div class="col-md-3"><div class="stat-card card-soft h-100"><div class="stat-icon"><i class="fas fa-layer-group"></i></div><div class="stat-content"><h6 class="stat-label">CV Scores</h6><h2 class="stat-value" id="evalCv">-</h2></div></div></div>
-            <div class="col-md-3"><div class="stat-card card-soft h-100"><div class="stat-icon"><i class="fas fa-gears"></i></div><div class="stat-content"><h6 class="stat-label">Model Params</h6><h2 class="stat-value" id="evalParams">-</h2></div></div></div>
-            <div class="col-md-3"><div class="stat-card card-soft h-100"><div class="stat-icon"><i class="fas fa-database"></i></div><div class="stat-content"><h6 class="stat-label">Samples</h6><h2 class="stat-value" id="evalSamples">-</h2></div></div></div>
+            <div class="col-md-3"><div class="stat-card card-soft h-100 eval-metric-card"><div class="stat-icon"><i class="fas fa-signal"></i></div><div class="stat-content"><h6 class="stat-label">Akurasi Terbaik</h6><h2 class="stat-value" id="evalAccuracy">-</h2><p class="stat-note" id="evalAccuracyNote">-</p></div></div></div>
+            <div class="col-md-3"><div class="stat-card card-soft h-100 eval-metric-card"><div class="stat-icon"><i class="fas fa-layer-group"></i></div><div class="stat-content"><h6 class="stat-label">CV Scores</h6><h2 class="stat-value" id="evalCv">-</h2><p class="stat-note" id="evalCvNote">-</p></div></div></div>
+            <div class="col-md-3"><div class="stat-card card-soft h-100 eval-metric-card"><div class="stat-icon"><i class="fas fa-gears"></i></div><div class="stat-content"><h6 class="stat-label">Model Params</h6><h2 class="stat-value" id="evalParams">-</h2><p class="stat-note" id="evalParamsNote">-</p></div></div></div>
+            <div class="col-md-3"><div class="stat-card card-soft h-100 eval-metric-card"><div class="stat-icon"><i class="fas fa-database"></i></div><div class="stat-content"><h6 class="stat-label">Samples</h6><h2 class="stat-value" id="evalSamples">-</h2><p class="stat-note" id="evalSamplesNote">-</p></div></div></div>
           </div>
         </section>
 

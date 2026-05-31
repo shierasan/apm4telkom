@@ -3,6 +3,10 @@
   let chartConfidence = null;
   let chartFeatureImportance = null;
   let chartDepthCompare = null;
+  let selectedHistoryIds = new Set();
+  let historyPage = 1;
+  let historyLimit = 25;
+  let historyTotalPages = 1;
 
   document.addEventListener('DOMContentLoaded', init);
 
@@ -67,27 +71,51 @@
 
   function bindHistoryControls() {
     const filter = document.getElementById('filterPriority');
-    if (filter) filter.addEventListener('change', loadHistory);
+    if (filter) filter.addEventListener('change', () => loadHistory(1));
 
     const refreshBtn = document.getElementById('refreshHistoryBtn');
-    if (refreshBtn) refreshBtn.addEventListener('click', loadHistory);
+    if (refreshBtn) refreshBtn.addEventListener('click', () => loadHistory(historyPage));
+
+    const prevBtn = document.getElementById('historyPrevBtn');
+    if (prevBtn) prevBtn.addEventListener('click', () => loadHistory(Math.max(1, historyPage - 1)));
+
+    const nextBtn = document.getElementById('historyNextBtn');
+    if (nextBtn) nextBtn.addEventListener('click', () => loadHistory(Math.min(historyTotalPages, historyPage + 1)));
+
+    const selectAllBtn = document.getElementById('selectAllHistoryBtn');
+    if (selectAllBtn) selectAllBtn.addEventListener('click', toggleSelectAllHistory);
+
+    const deleteSelectedBtn = document.getElementById('deleteSelectedHistoryBtn');
+    if (deleteSelectedBtn) deleteSelectedBtn.addEventListener('click', deleteSelectedHistoryRecords);
+
+    const selectAllCheckbox = document.getElementById('selectAllHistoryCheckbox');
+    if (selectAllCheckbox) {
+      selectAllCheckbox.addEventListener('change', (event) => {
+        const checked = event.target.checked;
+        document.querySelectorAll('.history-row-select').forEach((checkbox) => {
+          checkbox.checked = checked;
+          updateSelectedHistoryIds(checkbox.dataset.id, checked);
+        });
+        syncSelectAllCheckbox();
+      });
+    }
 
     const exportCsv = document.getElementById('exportCsvBtn');
     if (exportCsv) exportCsv.addEventListener('click', (event) => {
       event.preventDefault();
-      downloadBinary('/api/export/csv', 'kendala_history.csv');
+      downloadBinary('/api/export/csv', 'laporan_riwayat_klasifikasi.csv');
     });
 
     const exportXlsx = document.getElementById('exportXlsxBtn');
     if (exportXlsx) exportXlsx.addEventListener('click', (event) => {
       event.preventDefault();
-      downloadBinary('/api/export/xlsx', 'kendala_history.xlsx');
+      downloadBinary('/api/export/xlsx', 'laporan_riwayat_klasifikasi.xlsx');
     });
 
     const exportPdf = document.getElementById('exportPdfBtn');
     if (exportPdf) exportPdf.addEventListener('click', (event) => {
       event.preventDefault();
-      downloadBinary('/api/export/pdf', 'kendala_history.pdf');
+      downloadBinary('/api/export/pdf', 'laporan_riwayat_klasifikasi.pdf');
     });
   }
 
@@ -415,25 +443,37 @@
     });
   }
 
-  async function loadHistory() {
+  async function loadHistory(page = historyPage) {
     const tableBody = document.getElementById('historyTableBody');
     if (!tableBody) return;
 
     try {
+      historyPage = Math.max(1, parseInt(page, 10) || 1);
       const priority = document.getElementById('filterPriority')?.value || '';
-      const response = priority ? await window.api.getHistoryByPriority(priority) : await window.api.getHistory(100);
+      const response = await window.api.getHistoryPage({ page: historyPage, limit: historyLimit, priority });
       const records = response.data || [];
+      historyPage = response.page || historyPage;
+      historyLimit = response.limit || historyLimit;
+      historyTotalPages = response.totalPages || 1;
+      const visibleIds = new Set(records.map(record => record.id));
+      selectedHistoryIds = new Set([...selectedHistoryIds].filter(id => visibleIds.has(id)));
+      const rowStartNumber = ((historyPage - 1) * historyLimit) + 1;
 
       if (!records.length) {
-        tableBody.innerHTML = '<tr><td colspan="8" class="text-center text-muted py-4">Tidak ada data riwayat</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="9" class="text-center text-muted py-4">Tidak ada data riwayat</td></tr>';
+        syncSelectAllCheckbox();
+        updateHistoryPageInfo(response.total || 0, historyPage, historyTotalPages, historyLimit);
+        updateHistoryPagerState();
         return;
       }
 
       tableBody.innerHTML = records.map((record, index) => {
         const confidence = Math.round((record.output?.confidence || 0) * 100);
         const priorityClass = String(record.output?.prioritas || '').toLowerCase();
+        const checked = selectedHistoryIds.has(record.id) ? 'checked' : '';
         return `<tr>
-          <td>${index + 1}</td>
+          <td><input type="checkbox" class="form-check-input history-row-select" data-id="${record.id}" ${checked}></td>
+          <td>${rowStartNumber + index}</td>
           <td>${new Date(record.timestamp).toLocaleString('id-ID')}</td>
           <td>${record.input?.status_hi || '-'}</td>
           <td>${record.input?.ttic || '-'}</td>
@@ -443,9 +483,100 @@
           <td><button class="btn btn-sm btn-delete" onclick="window.UI_deleteRecord('${record.id}')"><i class="fas fa-trash"></i></button></td>
         </tr>`;
       }).join('');
+
+      tableBody.querySelectorAll('.history-row-select').forEach((checkbox) => {
+        checkbox.addEventListener('change', (event) => {
+          updateSelectedHistoryIds(event.target.dataset.id, event.target.checked);
+          syncSelectAllCheckbox();
+        });
+      });
+
+      syncSelectAllCheckbox();
+      updateHistoryPageInfo(response.total || records.length, historyPage, historyTotalPages, historyLimit);
+      updateHistoryPagerState();
     } catch (error) {
       console.error('loadHistory', error);
-      tableBody.innerHTML = '<tr><td colspan="8" class="text-center text-danger py-4">Gagal memuat history</td></tr>';
+      tableBody.innerHTML = '<tr><td colspan="9" class="text-center text-danger py-4">Gagal memuat history</td></tr>';
+      updateHistoryPageInfo(0, historyPage, historyTotalPages, historyLimit);
+      updateHistoryPagerState();
+    }
+  }
+
+  function updateHistoryPageInfo(total, page, totalPages, limit) {
+    const node = document.getElementById('historyPageInfo');
+    if (!node) return;
+    if (!total) {
+      node.textContent = 'Tidak ada data riwayat';
+      return;
+    }
+    const start = ((page - 1) * limit) + 1;
+    const end = Math.min(page * limit, total);
+    node.textContent = `Menampilkan ${start}-${end} dari ${total} data | Halaman ${page} dari ${totalPages}`;
+  }
+
+  function updateHistoryPagerState() {
+    const prevBtn = document.getElementById('historyPrevBtn');
+    const nextBtn = document.getElementById('historyNextBtn');
+    if (prevBtn) prevBtn.disabled = historyPage <= 1;
+    if (nextBtn) nextBtn.disabled = historyPage >= historyTotalPages;
+  }
+
+  function updateSelectedHistoryIds(id, checked) {
+    if (!id) return;
+    if (checked) {
+      selectedHistoryIds.add(id);
+    } else {
+      selectedHistoryIds.delete(id);
+    }
+  }
+
+  function syncSelectAllCheckbox() {
+    const checkbox = document.getElementById('selectAllHistoryCheckbox');
+    const visibleChecks = Array.from(document.querySelectorAll('.history-row-select'));
+    if (!checkbox) return;
+
+    const checkedCount = visibleChecks.filter(node => node.checked).length;
+    checkbox.checked = visibleChecks.length > 0 && checkedCount === visibleChecks.length;
+    checkbox.indeterminate = checkedCount > 0 && checkedCount < visibleChecks.length;
+  }
+
+  function toggleSelectAllHistory() {
+    const visibleChecks = Array.from(document.querySelectorAll('.history-row-select'));
+    if (!visibleChecks.length) return;
+
+    const shouldSelect = visibleChecks.some(node => !node.checked);
+    visibleChecks.forEach((checkbox) => {
+      checkbox.checked = shouldSelect;
+      updateSelectedHistoryIds(checkbox.dataset.id, shouldSelect);
+    });
+    syncSelectAllCheckbox();
+  }
+
+  async function deleteSelectedHistoryRecords() {
+    const ids = Array.from(selectedHistoryIds);
+    if (!ids.length) {
+      showNotification('Pilih minimal satu riwayat terlebih dahulu', 'error');
+      return;
+    }
+
+    const message = ids.length === 1
+      ? 'Apakah Anda yakin ingin menghapus 1 riwayat terpilih?'
+      : `Apakah Anda yakin ingin menghapus ${ids.length} riwayat terpilih?`;
+
+    if (!confirm(message)) return;
+
+    try {
+      showLoading();
+      await window.api.deleteRecords(ids);
+      selectedHistoryIds = new Set();
+      showNotification('Riwayat terpilih berhasil dihapus', 'success');
+      await loadHistory(Math.min(historyPage, Math.max(1, historyTotalPages)));
+      await loadStatistics();
+    } catch (error) {
+      console.error(error);
+      showNotification(error?.error || 'Gagal menghapus riwayat terpilih', 'error');
+    } finally {
+      hideLoading();
     }
   }
 
@@ -478,10 +609,21 @@
         statusNode.textContent = response.refreshed ? 'Data evaluasi baru di-refresh dari model terbaru.' : 'Data evaluasi tersedia.';
       }
 
-      updateText('evalAccuracy', tuning.best_score_f1_macro ? `${Math.round(tuning.best_score_f1_macro * 100)}%` : '-');
-      updateText('evalCv', comparison.depth_3?.cv_scores ? comparison.depth_3.cv_scores.map(score => `${Math.round(score * 100)}%`).join(', ') : '-');
-      updateText('evalParams', tuning.best_params ? Object.entries(tuning.best_params).map(([key, value]) => `${key}=${value}`).join(', ') : '-');
-      updateText('evalSamples', tuning.n_samples || 0);
+      const bestScore = typeof tuning.best_score_f1_macro === 'number' ? Math.round(tuning.best_score_f1_macro * 100) : null;
+      const depth3Scores = Array.isArray(comparison.depth_3?.cv_scores) ? comparison.depth_3.cv_scores : [];
+      const depth3Mean = depth3Scores.length ? Math.round(depth3Scores.reduce((total, score) => total + score, 0) / depth3Scores.length * 100) : null;
+      const bestParams = tuning.best_params || {};
+      const pickedParams = pickEvaluationParams(bestParams);
+      const samples = Number(tuning.n_samples || 0);
+
+      updateText('evalAccuracy', bestScore !== null ? `${bestScore}%` : '-');
+      updateText('evalAccuracyNote', 'Skor F1 macro terbaik dari proses tuning dan training terakhir.');
+      updateText('evalCv', depth3Mean !== null ? `${depth3Mean}%` : '-');
+      updateText('evalCvNote', depth3Scores.length ? `Fold: ${depth3Scores.map(score => `${Math.round(score * 100)}%`).join(', ')}` : 'Tidak ada skor cross-validation tersimpan.');
+      updateText('evalParams', pickedParams.summary || '-');
+      updateText('evalParamsNote', pickedParams.detail || 'Parameter model pohon keputusan yang terpilih.');
+      updateText('evalSamples', samples);
+      updateText('evalSamplesNote', samples ? 'Jumlah data history yang dipakai saat training.' : 'Belum ada data history untuk training.');
 
       const ctxDepth = document.getElementById('chartDepthCompare');
       if (ctxDepth && window.Chart) {
@@ -534,10 +676,26 @@
         statusNode.textContent = 'Evaluasi belum tersedia. Tambah data lalu tunggu model auto-refresh.';
       }
       updateText('evalAccuracy', '-');
+      updateText('evalAccuracyNote', '-');
       updateText('evalCv', '-');
+      updateText('evalCvNote', '-');
       updateText('evalParams', '-');
+      updateText('evalParamsNote', '-');
       updateText('evalSamples', '-');
+      updateText('evalSamplesNote', '-');
     }
+  }
+
+  function pickEvaluationParams(params) {
+    const keys = ['max_depth', 'min_samples_leaf', 'class_weight', 'criterion'];
+    const picked = keys
+      .filter((key) => params && params[key] !== undefined && params[key] !== null)
+      .map((key) => `${key}=${params[key]}`);
+
+    return {
+      summary: picked.length ? picked.join(' • ') : '',
+      detail: picked.length ? 'Parameter tree terbaik yang dipakai saat model ini dilatih.' : ''
+    };
   }
 
   function renderProfileCard() {
