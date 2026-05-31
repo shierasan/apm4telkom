@@ -1,0 +1,16 @@
+{
+  "n_samples": 30,
+  "class_counts": {
+    "0": 11,
+    "1": 15,
+    "2": 4
+  },
+  "cv_used": true,
+  "best_params": {
+    "class_weight": null,
+    "max_depth": 2,
+    "min_samples_leaf": 1
+  },
+  "best_score_f1_macro": 0.9629629629629629,
+  "best_score_accuracy": 0.8168678350970017
+}

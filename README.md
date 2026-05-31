@@ -318,3 +318,40 @@ Untuk pertanyaan atau feedback, hubungi tim pengembang atau buka issue di reposi
 
 **Last Updated**: May 2026
 **Version**: 1.0.0
+
+---
+
+## Developer Scripts & Struktur Baru
+
+- Skrip non-runtime dan utilitas dipindahkan ke: `backend/scripts`
+- Assets contoh dan laporan ditempatkan di: `backend/assets`
+
+Berikut skrip berguna untuk pengembangan dan pemeriksaan cepat:
+
+```bash
+# Start server (production-like)
+npm start
+
+# Development (auto-reload)
+npm run dev
+
+# Run API flow test (butuh server berjalan)
+npm run test:api
+
+# Run CSV import test
+npm run test:csv
+
+# Jalankan prediction quick-check tanpa server
+npm run test:predict
+
+# Jalankan tuning model (Python environment diperlukan)
+npm run tune
+
+# Bandingkan depth model (Python environment diperlukan)
+npm run compare
+
+# Set model produksi (copy model_d3.joblib -> model.joblib)
+npm run set-prod-model
+```
+
+Catatan: perintah `npm run tune` dan `npm run compare` memerlukan Python, scikit-learn, pandas, joblib, dll. Pastikan environment Python sudah terpasang.

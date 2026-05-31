@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil - ML Classification</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body class="app-page" data-page="profile">
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-inner d-flex flex-column">
+        <div class="sidebar-brand"><div class="brand-mark"><i class="fas fa-brain"></i></div><div><div class="brand-text">ML Classification</div><small class="text-white-50">BGES Telkom Pekanbaru</small></div></div>
+        <nav class="sidebar-menu">
+          <a href="/dashboard.html" data-nav-page="dashboard.html"><i class="fas fa-chart-line"></i><span class="menu-text">Dashboard</span></a>
+          <a href="/classifier.html" data-nav-page="classifier.html"><i class="fas fa-wand-magic-sparkles"></i><span class="menu-text">Klasifikasi</span></a>
+          <a href="/evaluation.html" data-nav-page="evaluation.html"><i class="fas fa-vial"></i><span class="menu-text">Evaluasi Model</span></a>
+          <a href="/history.html" data-nav-page="history.html"><i class="fas fa-clock-rotate-left"></i><span class="menu-text">Riwayat</span></a>
+          <a href="/profile.html" data-nav-page="profile.html"><i class="fas fa-user-circle"></i><span class="menu-text">Profil</span></a>
+        </nav>
+        <div class="sidebar-footer mt-auto">Informasi akun dan sesi login.</div>
+      </div>
+    </aside>
+
+    <div class="content-shell">
+      <header class="topbar">
+        <div class="topbar-inner">
+          <div class="topbar-left"><button id="sidebarToggle" class="icon-button" aria-label="Toggle sidebar" aria-expanded="true"><i class="fas fa-bars"></i></button><div class="page-meta"><div class="fw-bold">Profil</div><small class="text-muted">Data akun dan sesi</small></div></div>
+          <div class="topbar-right dropdown"><button class="profile-chip dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><span class="profile-avatar" data-user-initials>A</span><span class="profile-meta"><strong data-user-name>Admin</strong><small data-user-role>Operator</small></span></button><ul class="dropdown-menu dropdown-menu-end shadow-sm"><li><a class="dropdown-item" href="/profile.html"><i class="fas fa-user me-2"></i>Profil</a></li><li><button class="dropdown-item text-danger" data-logout><i class="fas fa-right-from-bracket me-2"></i>Logout</button></li></ul></div>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <section class="page-hero"><h1 class="page-title">Profil Pengguna</h1><p class="page-subtitle">Ringkasan akun aktif, token sesi, dan akses cepat untuk keluar dari sistem.</p></section>
+
+        <section class="page-section">
+          <div class="row g-3">
+            <div class="col-lg-8">
+              <div class="card card-soft h-100">
+                <div class="card-body p-4">
+                  <div class="d-flex align-items-center gap-3 mb-4">
+                    <div class="profile-avatar" style="width:72px;height:72px;font-size:1.2rem;" data-user-initials>A</div>
+                    <div>
+                      <h3 class="mb-1" id="profileName">Admin</h3>
+                      <div class="text-muted" id="profileRole">Operator</div>
+                    </div>
+                  </div>
+
+                  <div class="row g-3">
+                    <div class="col-md-6"><div class="card card-soft p-3"><div class="small text-muted">Token sesi</div><div class="fw-bold text-break" id="profileToken">-</div></div></div>
+                    <div class="col-md-6"><div class="card card-soft p-3"><div class="small text-muted">Waktu login</div><div class="fw-bold" id="profileLoginTime">-</div></div></div>
+                  </div>
+
+                  <div class="mt-4 d-flex gap-2 flex-wrap">
+                    <a href="/classifier.html" class="btn btn-primary"><i class="fas fa-wand-magic-sparkles me-2"></i>Mulai Klasifikasi</a>
+                    <button class="btn btn-outline-danger" data-logout><i class="fas fa-right-from-bracket me-2"></i>Logout</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="card card-soft h-100">
+                <div class="card-body p-4">
+                  <h5 class="mb-3">Panduan singkat</h5>
+                  <ul class="text-muted mb-0 ps-3">
+                    <li>Dashboard untuk ringkasan data.</li>
+                    <li>Klasifikasi untuk input manual atau CSV.</li>
+                    <li>Evaluasi untuk melihat performa model terbaru.</li>
+                    <li>Riwayat untuk audit dan export data.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div id="loadingOverlay" class="loading-overlay"><div class="loading-card"><div class="d-flex align-items-center gap-2"><div class="spinner-border text-danger" role="status"></div><div>Memuat profil...</div></div></div></div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

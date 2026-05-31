@@ -1,149 +1,127 @@
 /**
- * Decision Tree Classifier untuk Prioritas Kendala
- * Based on ML Model dari notebook
+ * Decision Tree classifier untuk prioritas kendala.
  */
+
+const { spawnSync } = require('child_process');
+const path = require('path');
+const fs = require('fs');
 
 class KendalaClassifier {
     constructor() {
-        this.labelEncoders = {
-            status: ['Assigned', 'Closed', 'In Progress', 'Open', 'Rejected'],
-            ttic: ['>3x24 jam', '1x24 jam', '2x24 jam'],
-            sto: ['STO 1', 'STO 2', 'STO 3', 'STO 4', 'STO 5'] // Contoh
-        };
-        this.targets = ['Rendah', 'Sedang', 'Tinggi'];
+        this.python = process.env.PYTHON_PATH || 'python';
+        this.modelScript = path.join(__dirname, 'model_service.py');
     }
 
-    /**
-     * Fungsi utama untuk klasifikasi prioritas
-     */
+    /** Jalankan Python model service untuk prediksi. */
     klassifikasiPrioritas(params) {
-        const {
-            status_hi,
-            ttic,
-            ttd_kb_num,
-            sto
-        } = params;
+        const payload = {
+            status_hi: params.status_hi || '',
+            ttic: params.ttic || '',
+            ttd_kb_num: parseInt(params.ttd_kb_num || 0),
+            sto: params.sto || ''
+        };
 
-        // Validasi input
-        if (!status_hi || !ttic || ttd_kb_num === undefined) {
-            throw new Error('Input tidak lengkap');
+        // Kirim payload ke Python via stdin.
+        const proc = spawnSync(this.python, [this.modelScript, 'predict'], {
+            input: JSON.stringify(payload),
+            encoding: 'utf8',
+            maxBuffer: 10 * 1024 * 1024
+        });
+
+        if (proc.error) {
+            throw new Error(`Failed to run Python: ${proc.error.message}`);
         }
 
-        // Normalisasi input
-        const statusLower = String(status_hi).toLowerCase().trim();
-        const tticLower = String(ttic).toLowerCase().trim();
-        const kontrak = parseInt(ttd_kb_num) || 0;
+        const out = (proc.stdout || '').trim();
+        if (!out) {
+            const err = (proc.stderr || '').trim();
+            throw new Error(`Python model returned no output. stderr: ${err}`);
+        }
 
-        // Rule-based decision tree logic dari notebook
-        const result = this.decisionTreeLogic(statusLower, tticLower, kontrak);
+        let parsed;
+        try {
+            parsed = JSON.parse(out);
+        } catch (e) {
+            throw new Error(`Invalid JSON from model: ${e.message} -- raw: ${out}`);
+        }
 
+        if (parsed.error) {
+            throw new Error(`Model error: ${parsed.error} ${parsed.details || ''}`);
+        }
+
+        // Tetap kompatibel dengan API lama.
         return {
-            prioritas: result.prioritas,
-            confidence: result.confidence,
-            reasoning: result.reasoning
+            prioritas: parsed.prioritas || 'Rendah',
+            confidence: parsed.confidence || 0,
+            reasoning: parsed.reasoning || null,
+            probabilities: parsed.probabilities || null,
+            feature_importances: parsed.feature_importances || null
         };
     }
 
-    /**
-     * Decision Tree Logic berdasarkan dari ML model notebook
-     */
-    decisionTreeLogic(status, ttic, kontrak) {
-        // Rule 1: Status Closed atau Rejected
-        if (status === 'closed' || status === 'rejected') {
-            return {
-                prioritas: 'Rendah',
-                confidence: 0.95,
-                reasoning: 'Kendala sudah ditutup atau ditolak'
-            };
+    /** Jalankan training model jika diperlukan. */
+    trainModel() {
+        const proc = spawnSync(this.python, [this.modelScript, 'train'], {
+            encoding: 'utf8',
+            maxBuffer: 10 * 1024 * 1024
+        });
+
+        if (proc.error) {
+            throw new Error(`Failed to run Python train: ${proc.error.message}`);
         }
 
-        // PRIORITAS TINGGI
-        // Rule: 1x24 jam = paling urgent
-        if (ttic === '1x24 jam') {
-            return {
-                prioritas: 'Tinggi',
-                confidence: 0.98,
-                reasoning: 'SLA 1x24 jam merupakan prioritas tertinggi'
-            };
+        let parsed;
+        try {
+            parsed = JSON.parse((proc.stdout || '').trim() || (proc.stderr || '').trim());
+        } catch (e) {
+            throw new Error(`Invalid JSON from model train: ${e.message}`);
         }
 
-        // Rule: 2x24 jam + kontrak besar (>= 90)
-        if (ttic === '2x24 jam' && kontrak >= 90) {
-            return {
-                prioritas: 'Tinggi',
-                confidence: 0.92,
-                reasoning: 'SLA 2x24 jam dengan kontrak pelanggan besar'
-            };
+        if (parsed.error) {
+            throw new Error(`Model train error: ${parsed.error}`);
         }
 
-        // Rule: >3x24 jam + kontrak besar (>= 90) = overdue
-        if (ttic === '>3x24 jam' && kontrak >= 90) {
-            return {
-                prioritas: 'Tinggi',
-                confidence: 0.90,
-                reasoning: 'Overdue dengan kontrak pelanggan penting'
-            };
-        }
-
-        // PRIORITAS SEDANG
-        // Rule: 2x24 jam tanpa kontrak besar
-        if (ttic === '2x24 jam') {
-            return {
-                prioritas: 'Sedang',
-                confidence: 0.85,
-                reasoning: 'SLA 2x24 jam, kontrak standar'
-            };
-        }
-
-        // Rule: >3x24 jam (tidak terlalu kritis)
-        if (ttic === '>3x24 jam') {
-            return {
-                prioritas: 'Sedang',
-                confidence: 0.80,
-                reasoning: 'SLA >3x24 jam, masih dalam batas waktu'
-            };
-        }
-
-        // PRIORITAS RENDAH (default)
-        return {
-            prioritas: 'Rendah',
-            confidence: 0.70,
-            reasoning: 'Kriteria tidak sesuai dengan prioritas tinggi atau sedang'
-        };
+        return parsed;
     }
 
-    /**
-     * Encode kategori ke angka
-     */
-    encodeCategory(value, categoryType) {
-        const categories = this.labelEncoders[categoryType];
-        if (!categories) return -1;
-        
-        const index = categories.indexOf(value);
-        return index !== -1 ? index : -1;
-    }
-
-    /**
-     * Decode angka ke kategori
-     */
-    decodeCategory(value, categoryType) {
-        const categories = this.labelEncoders[categoryType];
-        if (!categories || value < 0 || value >= categories.length) return null;
-        return categories[value];
-    }
-
-    /**
-     * Get semua kategori yang tersedia
-     */
+    /** Ambil kategori input dari data history. */
     getCategories() {
-        return this.labelEncoders;
+        try {
+            const dataPath = path.join(__dirname, '..', 'data', 'history.json');
+            if (!fs.existsSync(dataPath)) return {};
+            const raw = fs.readFileSync(dataPath, 'utf8');
+            const arr = JSON.parse(raw);
+            const cats = { status: new Set(), ttic: new Set(), sto: new Set() };
+            arr.forEach(r => {
+                const inp = r.input || {};
+                if (inp.status_hi) cats.status.add(inp.status_hi);
+                if (inp.ttic) cats.ttic.add(inp.ttic);
+                if (inp.sto) cats.sto.add(inp.sto);
+            });
+
+            return {
+                status: Array.from(cats.status),
+                ttic: Array.from(cats.ttic),
+                sto: Array.from(cats.sto)
+            };
+        } catch (e) {
+            return {};
+        }
     }
 
-    /**
-     * Get semua target/prioritas yang tersedia
-     */
+    /** Ambil label target yang pernah muncul di history. */
     getTargets() {
-        return this.targets;
+        try {
+            const dataPath = path.join(__dirname, '..', 'data', 'history.json');
+            if (!fs.existsSync(dataPath)) return [];
+            const raw = fs.readFileSync(dataPath, 'utf8');
+            const arr = JSON.parse(raw);
+            const set = new Set();
+            arr.forEach(r => { if (r.output && r.output.prioritas) set.add(r.output.prioritas); });
+            return Array.from(set);
+        } catch (e) {
+            return [];
+        }
     }
 }
 

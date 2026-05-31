@@ -6,7 +6,13 @@
   "scripts": {
     "start": "node backend/app.js",
     "dev": "nodemon backend/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:api": "node backend/scripts/test_api_flow.js",
+    "test:csv": "node backend/scripts/test_csv_flow.js",
+    "test:predict": "node backend/scripts/test_predict.js",
+    "tune": "python backend/scripts/tune_decision_tree.py",
+    "compare": "python backend/scripts/compare_depths.py",
+    "set-prod-model": "node backend/scripts/set_production_model.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +27,8 @@
   "homepage": "https://github.com/shierasan/apm4telkom#readme",
   "dependencies": {
     "axios": "^1.16.0",
+    "exceljs": "^4.3.0",
+    "pdfkit": "^0.13.0",
     "express": "^4.18.2",
     "cors": "^2.8.5",
     "body-parser": "^1.20.2",

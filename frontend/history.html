@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Riwayat - ML Classification</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body class="app-page" data-page="history">
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-inner d-flex flex-column">
+        <div class="sidebar-brand"><div class="brand-mark"><i class="fas fa-brain"></i></div><div><div class="brand-text">ML Classification</div><small class="text-white-50">BGES Telkom Pekanbaru</small></div></div>
+        <nav class="sidebar-menu">
+          <a href="/dashboard.html" data-nav-page="dashboard.html"><i class="fas fa-chart-line"></i><span class="menu-text">Dashboard</span></a>
+          <a href="/classifier.html" data-nav-page="classifier.html"><i class="fas fa-wand-magic-sparkles"></i><span class="menu-text">Klasifikasi</span></a>
+          <a href="/evaluation.html" data-nav-page="evaluation.html"><i class="fas fa-vial"></i><span class="menu-text">Evaluasi Model</span></a>
+          <a href="/history.html" data-nav-page="history.html"><i class="fas fa-clock-rotate-left"></i><span class="menu-text">Riwayat</span></a>
+          <a href="/profile.html" data-nav-page="profile.html"><i class="fas fa-user-circle"></i><span class="menu-text">Profil</span></a>
+        </nav>
+        <div class="sidebar-footer mt-auto">Lihat, filter, dan hapus riwayat klasifikasi.</div>
+      </div>
+    </aside>
+
+    <div class="content-shell">
+      <header class="topbar">
+        <div class="topbar-inner">
+          <div class="topbar-left"><button id="sidebarToggle" class="icon-button" aria-label="Toggle sidebar" aria-expanded="true"><i class="fas fa-bars"></i></button><div class="page-meta"><div class="fw-bold">Riwayat</div><small class="text-muted">Filter, export, dan audit data</small></div></div>
+          <div class="topbar-right dropdown"><button class="profile-chip dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><span class="profile-avatar" data-user-initials>A</span><span class="profile-meta"><strong data-user-name>Admin</strong><small data-user-role>Operator</small></span></button><ul class="dropdown-menu dropdown-menu-end shadow-sm"><li><a class="dropdown-item" href="/profile.html"><i class="fas fa-user me-2"></i>Profil</a></li><li><button class="dropdown-item text-danger" data-logout><i class="fas fa-right-from-bracket me-2"></i>Logout</button></li></ul></div>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <section class="page-hero"><h1 class="page-title">Riwayat Klasifikasi</h1><p class="page-subtitle">Semua hasil klasifikasi tersimpan di sini dan bisa difilter berdasarkan prioritas.</p></section>
+
+        <section class="page-section">
+          <div class="card card-soft p-3 mb-3">
+            <div class="row g-2 align-items-center">
+              <div class="col-md-4"><label class="form-label mb-1" for="filterPriority">Filter Prioritas</label><select id="filterPriority" class="form-select"><option value="">Semua Prioritas</option><option value="Tinggi">Tinggi</option><option value="Sedang">Sedang</option><option value="Rendah">Rendah</option></select></div>
+              <div class="col-md-8 text-md-end d-flex gap-2 justify-content-md-end mt-3 mt-md-0"><button id="refreshHistoryBtn" class="btn btn-outline-primary"><i class="fas fa-rotate me-2"></i>Refresh</button><button id="exportCsvBtn" class="btn btn-outline-success"><i class="fas fa-file-csv me-2"></i>CSV</button><button id="exportXlsxBtn" class="btn btn-outline-success"><i class="fas fa-file-excel me-2"></i>XLSX</button><button id="exportPdfBtn" class="btn btn-outline-danger"><i class="fas fa-file-pdf me-2"></i>PDF</button></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="page-section">
+          <div class="card card-soft">
+            <div class="card-body table-responsive">
+              <table class="table align-middle mb-0">
+                <thead>
+                  <tr><th>No</th><th>Waktu</th><th>Status HI</th><th>TTIC</th><th>TTD KB</th><th>Prioritas</th><th>Confidence</th><th>Aksi</th></tr>
+                </thead>
+                <tbody id="historyTableBody"><tr><td colspan="8" class="text-center text-muted py-4">Memuat data...</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <div id="loadingOverlay" class="loading-overlay"><div class="loading-card"><div class="d-flex align-items-center gap-2"><div class="spinner-border text-danger" role="status"></div><div>Memuat riwayat...</div></div></div></div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

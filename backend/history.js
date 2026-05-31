@@ -1,5 +1,5 @@
 /**
- * History Manager - Mengelola riwayat klasifikasi kendala
+ * History Manager - menyimpan dan membaca riwayat klasifikasi.
  */
 
 const fs = require('fs');
@@ -13,18 +13,14 @@ class HistoryManager {
         this.ensureHistoryFile();
     }
 
-    /**
-     * Pastikan file history ada
-     */
+    /** Pastikan file history ada. */
     ensureHistoryFile() {
         if (!fs.existsSync(HISTORY_FILE)) {
             fs.writeFileSync(HISTORY_FILE, JSON.stringify([], null, 2));
         }
     }
 
-    /**
-     * Tambah record klasifikasi ke history
-     */
+    /** Tambah record klasifikasi ke history. */
     addRecord(data) {
         try {
             const history = this.getHistory();
@@ -46,9 +42,7 @@ class HistoryManager {
         }
     }
 
-    /**
-     * Ambil semua history
-     */
+    /** Ambil history terbaru. */
     getHistory(limit = 1000) {
         try {
             const data = fs.readFileSync(HISTORY_FILE, 'utf8');
@@ -60,9 +54,7 @@ class HistoryManager {
         }
     }
 
-    /**
-     * Ambil history dengan filter
-     */
+    /** Ambil history dengan filter prioritas. */
     getHistoryByPriority(priority) {
         try {
             const history = this.getHistory(1000);
@@ -73,9 +65,7 @@ class HistoryManager {
         }
     }
 
-    /**
-     * Hitung statistik dari history
-     */
+    /** Hitung statistik dari history. */
     getStatistics() {
         try {
             const history = this.getHistory(1000);
@@ -116,9 +106,7 @@ class HistoryManager {
         }
     }
 
-    /**
-     * Hapus record tertentu
-     */
+    /** Hapus record tertentu. */
     deleteRecord(recordId) {
         try {
             let history = this.getHistory(1000);
@@ -131,9 +119,7 @@ class HistoryManager {
         }
     }
 
-    /**
-     * Export history ke CSV format
-     */
+    /** Export history ke CSV. */
     exportToCSV() {
         try {
             const history = this.getHistory(1000);
@@ -167,9 +153,7 @@ class HistoryManager {
         }
     }
 
-    /**
-     * Clear semua history (untuk development)
-     */
+    /** Clear semua history (untuk development). */
     clearHistory() {
         try {
             fs.writeFileSync(HISTORY_FILE, JSON.stringify([], null, 2));

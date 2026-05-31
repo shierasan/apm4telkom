@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Klasifikasi - ML Classification</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body class="app-page" data-page="classifier">
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-inner d-flex flex-column">
+        <div class="sidebar-brand"><div class="brand-mark"><i class="fas fa-brain"></i></div><div><div class="brand-text">ML Classification</div><small class="text-white-50">BGES Telkom Pekanbaru</small></div></div>
+        <nav class="sidebar-menu">
+          <a href="/dashboard.html" data-nav-page="dashboard.html"><i class="fas fa-chart-line"></i><span class="menu-text">Dashboard</span></a>
+          <a href="/classifier.html" data-nav-page="classifier.html"><i class="fas fa-wand-magic-sparkles"></i><span class="menu-text">Klasifikasi</span></a>
+          <a href="/evaluation.html" data-nav-page="evaluation.html"><i class="fas fa-vial"></i><span class="menu-text">Evaluasi Model</span></a>
+          <a href="/history.html" data-nav-page="history.html"><i class="fas fa-clock-rotate-left"></i><span class="menu-text">Riwayat</span></a>
+          <a href="/profile.html" data-nav-page="profile.html"><i class="fas fa-user-circle"></i><span class="menu-text">Profil</span></a>
+        </nav>
+        <div class="sidebar-footer mt-auto">Gunakan form untuk prediksi tunggal atau import massal CSV/XLSX.</div>
+      </div>
+    </aside>
+
+    <div class="content-shell">
+      <header class="topbar">
+        <div class="topbar-inner">
+          <div class="topbar-left">
+            <button id="sidebarToggle" class="icon-button" aria-label="Toggle sidebar" aria-expanded="true"><i class="fas fa-bars"></i></button>
+            <div class="page-meta"><div class="fw-bold">Klasifikasi</div><small class="text-muted">Input data dan dapatkan prioritas</small></div>
+          </div>
+          <div class="topbar-right dropdown">
+            <button class="profile-chip dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><span class="profile-avatar" data-user-initials>A</span><span class="profile-meta"><strong data-user-name>Admin</strong><small data-user-role>Operator</small></span></button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm"><li><a class="dropdown-item" href="/profile.html"><i class="fas fa-user me-2"></i>Profil</a></li><li><button class="dropdown-item text-danger" data-logout><i class="fas fa-right-from-bracket me-2"></i>Logout</button></li></ul>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <section class="page-hero"><h1 class="page-title">Klasifikasi Prioritas Kendala</h1><p class="page-subtitle">Masukkan detail kendala untuk melihat prioritas, confidence, dan alasan prediksi.</p></section>
+
+        <section class="page-section">
+          <div class="row g-3">
+            <div class="col-lg-6">
+              <div class="card card-soft form-card">
+                <div class="card-header bg-gradient text-white"><h5 class="card-title mb-0"><i class="fas fa-pencil-alt me-2"></i>Input Data Kendala</h5></div>
+                <div class="card-body">
+                  <form id="classifierForm">
+                    <div class="mb-3"><label for="status_hi" class="form-label">Status HI</label><select class="form-select" id="status_hi" required><option value="">-- Pilih Status --</option><option value="In Progress">In Progress</option><option value="Closed">Closed</option><option value="Rejected">Rejected</option></select></div>
+                    <div class="mb-3"><label for="ttic" class="form-label">TTIC</label><select class="form-select" id="ttic" required><option value="">-- Pilih TTIC --</option><option value="1x24 jam">1x24 jam (Paling Urgent)</option><option value="2x24 jam">2x24 jam (Urgent)</option><option value=">3x24 jam">&gt;3x24 jam (Normal)</option></select></div>
+                    <div class="mb-3"><label for="ttd_kb_num" class="form-label">TTD KB (hari)</label><input type="number" class="form-control" id="ttd_kb_num" min="0" max="365" placeholder="Contoh: 30" required><small class="text-muted">Masukkan nilai dalam hari (0-365)</small></div>
+                    <div class="mb-4"><label for="sto" class="form-label">STO</label><input type="text" class="form-control" id="sto" placeholder="Contoh: PBR, DUM"></div>
+                    <button type="submit" class="btn btn-primary w-100 btn-lg"><i class="fas fa-magic me-2"></i>Klasifikasi Kendala</button>
+                  </form>
+                </div>
+              </div>
+
+              <div class="card card-soft mt-3">
+                <div class="card-header"><h6 class="mb-0"><i class="fas fa-file-csv me-2"></i>Klasifikasi Massal (CSV/XLSX)</h6></div>
+                <div class="card-body">
+                  <p class="small text-muted mb-3">Format: CSV/XLSX dengan header status_hi, ttic, ttd_kb_num, sto</p>
+                  <div class="input-group">
+                    <input type="file" class="form-control" id="csvFile" accept=".csv,.xlsx,.xls">
+                    <button id="processCsvBtn" class="btn btn-success">Proses File</button>
+                  </div>
+                  <div id="csvResultCount" class="mt-2 small text-muted"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="card card-soft result-card h-100" id="resultCard" style="display:none;">
+                <div class="card-header bg-success text-white"><h5 class="card-title mb-0"><i class="fas fa-check me-2"></i>Hasil Klasifikasi</h5></div>
+                <div class="card-body">
+                  <div id="emptyState" class="text-center text-muted py-5">
+                    <i class="fas fa-inbox fa-2x mb-3"></i>
+                    <div>Hasil klasifikasi akan muncul di sini.</div>
+                  </div>
+                  <div class="result-prioritas mb-3"><h6 class="result-label">Prioritas</h6><div id="resultPrioritas" class="result-value">-</div></div>
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-2"><span class="result-label mb-0">Confidence</span><span id="resultConfidenceText">-</span></div>
+                    <div class="progress"><div id="resultConfidenceBar" class="progress-bar" style="width:0%"></div></div>
+                  </div>
+                  <div class="mb-3"><h6 class="result-label">Alasan</h6><p id="resultReasoning" class="mb-0">-</p></div>
+                  <div class="result-timestamp text-muted small">Diperbarui: <span id="resultTimestamp">-</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div id="loadingOverlay" class="loading-overlay"><div class="loading-card"><div class="d-flex align-items-center gap-2"><div class="spinner-border text-danger" role="status"></div><div>Memproses data...</div></div></div></div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
