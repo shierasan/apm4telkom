@@ -155,6 +155,18 @@
       const file = input.files[0];
       const text = await readBatchFileAsCsv(file);
       const rows = extractBatchRows(text);
+      console.debug('[batch] handleCsvUpload: parsed rows count=', rows.length);
+      if (rows && rows.length) console.debug('[batch] handleCsvUpload sample row=', rows[0]);
+      // Temporary on-page debug: show parsed count and first row so users without console can verify
+      const previewNode = document.getElementById('csvResultCount');
+      if (previewNode) {
+        try {
+          const sample = rows && rows.length ? JSON.stringify(rows[0]) : '-';
+          previewNode.textContent = `Parsed ${rows.length} rows. Sample: ${sample}`;
+        } catch (e) {
+          previewNode.textContent = `Parsed ${rows.length} rows.`;
+        }
+      }
       if (!rows.length) {
         throw { error: 'Tidak ada baris data valid untuk diproses' };
       }
@@ -177,7 +189,9 @@
   async function readBatchFileAsCsv(file) {
     const name = String(file.name || '').toLowerCase();
     if (name.endsWith('.csv')) {
-      return file.text();
+      const txt = await file.text();
+      console.debug('[batch] readBatchFileAsCsv: csv length=', txt.length, 'file=', file.name);
+      return txt;
     }
 
     if (name.endsWith('.xlsx') || name.endsWith('.xls')) {
@@ -193,7 +207,9 @@
       }
 
       const sheet = workbook.Sheets[firstSheetName];
-      return window.XLSX.utils.sheet_to_csv(sheet, { blankrows: false });
+      const csv = window.XLSX.utils.sheet_to_csv(sheet, { blankrows: false });
+      console.debug('[batch] readBatchFileAsCsv: xlsx -> csv length=', csv.length, 'file=', file.name);
+      return csv;
     }
 
     throw { error: 'Format file belum didukung. Gunakan .csv atau .xlsx' };
@@ -208,30 +224,88 @@
       throw { error: 'File kosong atau tidak memiliki data' };
     }
 
-    const header = parseCsvRow(lines[0].replace(/^\uFEFF/, ''));
-    const normalizedHeader = header.map(normalizeHeaderName);
-    const findIndex = (aliases) => {
-      for (const alias of aliases) {
-        const idx = normalizedHeader.indexOf(normalizeHeaderName(alias));
-        if (idx !== -1) return idx;
-      }
-      return -1;
+    const expectedFields = ['status_hi', 'ttic', 'ttd_kb_num', 'sto'];
+    const headerAliases = {
+      status_hi: ['status_hi', 'status hi', 'status', 'statushi'],
+      ttic: ['ttic'],
+      ttd_kb_num: ['ttd_kb_num', 'ttd kb num', 'ttd kb', 'ttd kb hari', 'ttd', 'ttd hari'],
+      sto: ['sto']
     };
 
-    const idxStatus = findIndex(['status_hi', 'status hi', 'status']);
-    const idxTtic = findIndex(['ttic']);
-    const idxTtd = findIndex(['ttd_kb_num', 'ttd kb', 'ttd kb hari', 'ttd']);
-    const idxSto = findIndex(['sto']);
+    const detectCsvDelimiter = (sampleLines) => {
+      const candidates = [',', ';', '\t'];
+      let bestDelimiter = ',';
+      let bestScore = -1;
+      let bestHeaderIndex = 0;
+
+      for (const delimiter of candidates) {
+        for (let i = 0; i < sampleLines.length; i++) {
+          const parsed = parseCsvRow(sampleLines[i].replace(/^\uFEFF/, ''), delimiter);
+          const normalized = parsed.map(normalizeHeaderName);
+          const score = expectedFields.reduce((total, field) => {
+            const aliases = headerAliases[field] || [];
+            const hit = aliases.some((alias) => normalized.includes(normalizeHeaderName(alias)));
+            return total + (hit ? 1 : 0);
+          }, 0) + (parsed.length > 1 ? 0.25 : 0);
+
+          if (score > bestScore) {
+            bestScore = score;
+            bestDelimiter = delimiter;
+            bestHeaderIndex = i;
+          }
+        }
+      }
+
+      return { delimiter: bestDelimiter, headerIndex: bestHeaderIndex };
+    };
+
+    const sampleLines = lines.slice(0, Math.min(lines.length, 20));
+    const detected = detectCsvDelimiter(sampleLines);
+    const delimiter = detected.delimiter;
+
+    let headerIndex = detected.headerIndex;
+    let header = parseCsvRow(lines[headerIndex].replace(/^\uFEFF/, ''), delimiter);
+    let normalizedHeader = header.map(normalizeHeaderName);
+    let idxStatus = findHeaderIndexFromNormalized(normalizedHeader, headerAliases.status_hi);
+    let idxTtic = findHeaderIndexFromNormalized(normalizedHeader, headerAliases.ttic);
+    let idxTtd = findHeaderIndexFromNormalized(normalizedHeader, headerAliases.ttd_kb_num);
+    let idxSto = findHeaderIndexFromNormalized(normalizedHeader, headerAliases.sto);
+
+    for (let i = 0; i < Math.min(lines.length, 20); i++) {
+      const candidate = parseCsvRow(lines[i].replace(/^\uFEFF/, ''), delimiter);
+      const candidateNormalized = candidate.map(normalizeHeaderName);
+      const candidateStatus = findHeaderIndexFromNormalized(candidateNormalized, headerAliases.status_hi);
+      const candidateTtic = findHeaderIndexFromNormalized(candidateNormalized, headerAliases.ttic);
+      const candidateTtd = findHeaderIndexFromNormalized(candidateNormalized, headerAliases.ttd_kb_num);
+      const candidateSto = findHeaderIndexFromNormalized(candidateNormalized, headerAliases.sto);
+      const foundCount = [candidateStatus, candidateTtic, candidateTtd, candidateSto].filter((value) => value !== -1).length;
+      if (foundCount >= 3) {
+        headerIndex = i;
+        header = candidate;
+        normalizedHeader = candidateNormalized;
+        idxStatus = candidateStatus;
+        idxTtic = candidateTtic;
+        idxTtd = candidateTtd;
+        idxSto = candidateSto;
+        break;
+      }
+    }
+
+    console.debug('[batch] extractBatchRows: delimiter=', delimiter, 'headerIndex=', headerIndex, 'header=', header);
 
     const out = [];
 
-    for (let i = 1; i < lines.length; i++) {
-      const cols = parseCsvRow(lines[i]);
-      const status = idxStatus !== -1 ? (cols[idxStatus] || '') : '';
-      const ttic = idxTtic !== -1 ? (cols[idxTtic] || '') : '';
+    for (let i = headerIndex + 1; i < lines.length; i++) {
+      const cols = parseCsvRow(lines[i], delimiter);
+      const status = normalizeBatchStatus(idxStatus !== -1 ? (cols[idxStatus] || '') : '');
+      const ttic = normalizeBatchTtic(idxTtic !== -1 ? (cols[idxTtic] || '') : '');
       const ttdRaw = idxTtd !== -1 ? (cols[idxTtd] || '') : '';
       const ttd = Number.parseInt(String(ttdRaw).replace(/[^0-9-]/g, ''), 10);
-      const sto = idxSto !== -1 ? (cols[idxSto] || '') : '';
+      const sto = normalizeBatchText(idxSto !== -1 ? (cols[idxSto] || '') : '');
+
+      if (!status && !ttic && !sto && !Number.isFinite(ttd)) {
+        continue;
+      }
 
       out.push({
         status_hi: status,
@@ -252,7 +326,15 @@
       .replace(/^_+|_+$/g, '');
   }
 
-  function parseCsvRow(line) {
+  function findHeaderIndexFromNormalized(normalizedHeader, aliases) {
+    for (const alias of aliases) {
+      const idx = normalizedHeader.indexOf(normalizeHeaderName(alias));
+      if (idx !== -1) return idx;
+    }
+    return -1;
+  }
+
+  function parseCsvRow(line, delimiter = ',') {
     const out = [];
     const text = String(line || '');
     let current = '';
@@ -272,7 +354,7 @@
         continue;
       }
 
-      if (ch === ',' && !inQuotes) {
+      if (ch === delimiter && !inQuotes) {
         out.push(current.trim());
         current = '';
         continue;
@@ -283,6 +365,32 @@
 
     out.push(current.trim());
     return out;
+  }
+
+  function normalizeBatchText(value) {
+    return String(value || '')
+      .replace(/\u00A0/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function normalizeBatchStatus(value) {
+    const text = normalizeBatchText(value).toLowerCase();
+    if (!text) return '';
+    if (text.includes('progress') || text === 'open') return 'In Progress';
+    if (text.includes('reject')) return 'Rejected';
+    if (text.includes('close')) return 'Closed';
+    if (text.includes('in progress')) return 'In Progress';
+    return normalizeBatchText(value);
+  }
+
+  function normalizeBatchTtic(value) {
+    const text = normalizeBatchText(value).toLowerCase();
+    if (!text) return '';
+    if (text.includes('1x24')) return '1x24 jam';
+    if (text.includes('2x24')) return '2x24 jam';
+    if (text.includes('3x24') || text.includes('>3x24') || text.includes('lebih dari 3x24')) return '>3x24 jam';
+    return normalizeBatchText(value);
   }
 
   function displayCsvResults(results) {

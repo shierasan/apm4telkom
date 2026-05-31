@@ -140,6 +140,46 @@ function findHeaderIndex(header, aliases) {
     return -1;
 }
 
+function normalizeText(value) {
+    return String(value || '')
+        .replace(/\u00A0/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
+function normalizeStatusHi(value) {
+    const text = normalizeText(value).toLowerCase();
+    if (!text) return '';
+    if (text.includes('progress') || text === 'open') return 'In Progress';
+    if (text.includes('reject')) return 'Rejected';
+    if (text.includes('close')) return 'Closed';
+    if (text.includes('in progress')) return 'In Progress';
+    return normalizeText(value);
+}
+
+function normalizeTtic(value) {
+    const text = normalizeText(value).toLowerCase();
+    if (!text) return '';
+    if (text.includes('1x24')) return '1x24 jam';
+    if (text.includes('2x24')) return '2x24 jam';
+    if (text.includes('3x24') || text.includes('>3x24') || text.includes('lebih dari 3x24')) return '>3x24 jam';
+    return normalizeText(value);
+}
+
+function normalizeSto(value) {
+    return normalizeText(value);
+}
+
+function normalizeBatchInput(row = {}) {
+    const ttd = Number.parseInt(String(row?.ttd_kb_num ?? row?.ttd ?? 0).replace(/[^0-9-]/g, ''), 10);
+    return {
+        status_hi: normalizeStatusHi(row?.status_hi),
+        ttic: normalizeTtic(row?.ttic),
+        ttd_kb_num: Number.isFinite(ttd) ? ttd : 0,
+        sto: normalizeSto(row?.sto)
+    };
+}
+
 /**
  * POST /api/login - simple auth endpoint
  * Body: { username, password }
@@ -193,10 +233,10 @@ app.get('/api/health', (req, res) => {
  */
 app.post('/api/classify', authMiddleware, (req, res) => {
     try {
-        const { status_hi, ttic, ttd_kb_num, sto } = req.body;
+        const payload = normalizeBatchInput(req.body || {});
 
         // Validasi input
-        if (!status_hi || !ttic || ttd_kb_num === undefined) {
+        if (!payload.status_hi || !payload.ttic || payload.ttd_kb_num === undefined) {
             return res.status(400).json({
                 error: 'Input tidak lengkap. Diperlukan: status_hi, ttic, ttd_kb_num'
             });
@@ -204,15 +244,15 @@ app.post('/api/classify', authMiddleware, (req, res) => {
 
         // Klasifikasi
         const result = classifier.klassifikasiPrioritas({
-            status_hi,
-            ttic,
-            ttd_kb_num: parseInt(ttd_kb_num),
-            sto: sto || 'Unknown'
+            status_hi: payload.status_hi,
+            ttic: payload.ttic,
+            ttd_kb_num: parseInt(payload.ttd_kb_num),
+            sto: payload.sto || 'Unknown'
         });
 
         // Simpan ke history
         const historyRecord = historyManager.addRecord({
-            input: { status_hi, ttic, ttd_kb_num, sto },
+            input: payload,
             output: result
         });
 
@@ -259,12 +299,12 @@ app.post('/api/classify/csv-text', authMiddleware, (req, res) => {
         for (let i = 1; i < lines.length; i++) {
             if (!lines[i].trim()) continue;
             const cols = parseCsvLine(lines[i]);
-            const payload = {
+            const payload = normalizeBatchInput({
                 status_hi: idx.status_hi !== -1 ? (cols[idx.status_hi] || '') : '',
                 ttic: idx.ttic !== -1 ? (cols[idx.ttic] || '') : '',
                 ttd_kb_num: idx.ttd !== -1 ? (parseInt(cols[idx.ttd]) || 0) : 0,
                 sto: idx.sto !== -1 ? (cols[idx.sto] || '') : ''
-            };
+            });
 
             let out = null;
             let saved = false;
@@ -304,12 +344,7 @@ app.post('/api/classify/batch', authMiddleware, (req, res) => {
 
         const results = [];
         for (const row of rows) {
-            const payload = {
-                status_hi: String(row?.status_hi || '').trim(),
-                ttic: String(row?.ttic || '').trim(),
-                ttd_kb_num: Number.parseInt(row?.ttd_kb_num, 10) || 0,
-                sto: String(row?.sto || '').trim()
-            };
+            const payload = normalizeBatchInput(row);
 
             let out = null;
             let saved = false;
