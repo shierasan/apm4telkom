@@ -8,6 +8,14 @@
   let historyLimit = 25;
   let historyTotalPages = 1;
 
+  const STO_OPTIONS = ['BKR', 'DUM', 'PBB', 'PBR', 'PKR', 'PMB', 'RBI', 'RGT', 'STO 2'];
+  const ALPHA_TEXT_PATTERN = /^[A-Za-zÀ-ÿ\s'-]+$/;
+  const SAMPLE_BATCH_CSV = `nama_masalah,keterangan_masalah,nama_teknisi,status_hi,ttic,ttd_kb_num,sto
+Gangguan Link Utama,Link utama terputus di wilayah pelanggan,Andi Pratama,In Progress,1x24 jam,95,PBR
+Gangguan Sinkronisasi,Data sinkronisasi belum masuk,Putri Aulia,In Progress,2x24 jam,80,DUM
+Pekerjaan Selesai,Tiket sudah ditutup dengan baik,Rudi Santoso,Closed,>3x24 jam,30,RBI
+Penolakan Kendala,Permintaan ditolak oleh pelanggan,Siti Rahma,Rejected,2x24 jam,10,RGT`;
+
   document.addEventListener('DOMContentLoaded', init);
 
   function init() {
@@ -18,6 +26,7 @@
       case 'classifier':
         bindClassifierForm();
         bindCsvUpload();
+        bindBatchSampleControls();
         loadStatistics();
         setInterval(loadStatistics, 30000);
         break;
@@ -47,6 +56,8 @@
   function bindClassifierForm() {
     const form = document.getElementById('classifierForm');
     if (form) form.addEventListener('submit', handleClassify);
+    bindAlphaOnlyInputs();
+    populateStoOptions();
   }
 
   function bindCsvUpload() {
@@ -57,6 +68,51 @@
         handleCsvUpload();
       });
     }
+  }
+
+  function bindBatchSampleControls() {
+    const fillBtn = document.getElementById('fillSampleCsvBtn');
+    const processBtn = document.getElementById('processSampleCsvBtn');
+    const sampleNode = document.getElementById('csvSampleText');
+
+    if (fillBtn && sampleNode) {
+      fillBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        sampleNode.value = SAMPLE_BATCH_CSV;
+        const countNode = document.getElementById('csvResultCount');
+        if (countNode) countNode.textContent = 'Data uji siap diproses dari sample bawaan.';
+      });
+    }
+
+    if (processBtn) {
+      processBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        handleSampleCsvText();
+      });
+    }
+  }
+
+  function bindAlphaOnlyInputs() {
+    ['nama_masalah', 'keterangan_masalah', 'nama_teknisi'].forEach((id) => {
+      const node = document.getElementById(id);
+      if (!node) return;
+      node.addEventListener('input', () => {
+        const cleaned = normalizeAlphaText(node.value);
+        if (node.value !== cleaned) node.value = cleaned;
+      });
+    });
+  }
+
+  function populateStoOptions() {
+    const select = document.getElementById('sto');
+    if (!select || select.dataset.populated === '1') return;
+
+    const currentValue = select.value;
+    const options = STO_OPTIONS.map((sto) => `<option value="${sto}">${sto}</option>`).join('');
+    select.insertAdjacentHTML('beforeend', options);
+    select.dataset.populated = '1';
+
+    if (currentValue) select.value = currentValue;
   }
 
   function bindEvaluationRefresh() {
@@ -124,12 +180,7 @@
 
     try {
       showLoading();
-      const payload = {
-        status_hi: document.getElementById('status_hi').value,
-        ttic: document.getElementById('ttic').value,
-        ttd_kb_num: parseInt(document.getElementById('ttd_kb_num').value, 10) || 0,
-        sto: document.getElementById('sto').value
-      };
+      const payload = collectClassificationPayload();
 
       const data = await window.api.classify(payload);
       displayResult(data.classification);
@@ -143,6 +194,59 @@
     }
   }
 
+  function collectClassificationPayload() {
+    const namaMasalah = validateAlphaField('nama_masalah', 'Nama Masalah', true);
+    const keteranganMasalah = validateAlphaField('keterangan_masalah', 'Keterangan Masalah', true);
+    const namaTeknisi = validateAlphaField('nama_teknisi', 'Nama Teknisi', true);
+    const statusHi = document.getElementById('status_hi')?.value || '';
+    const ttic = document.getElementById('ttic')?.value || '';
+    const ttdInput = document.getElementById('ttd_kb_num')?.value;
+    const sto = document.getElementById('sto')?.value || '';
+
+    if (!statusHi || !ttic || !sto) {
+      throw new Error('Status HI, TTIC, dan STO wajib diisi');
+    }
+
+    const ttdKbNum = parseInt(ttdInput, 10);
+    if (!Number.isFinite(ttdKbNum) || ttdKbNum < 0 || ttdKbNum > 365) {
+      throw new Error('TTD KB harus berupa angka 0 sampai 365');
+    }
+
+    return {
+      nama_masalah: namaMasalah,
+      keterangan_masalah: keteranganMasalah,
+      nama_teknisi: namaTeknisi,
+      status_hi: statusHi,
+      ttic,
+      ttd_kb_num: ttdKbNum,
+      sto
+    };
+  }
+
+  function validateAlphaField(id, label, required = false) {
+    const node = document.getElementById(id);
+    const value = normalizeAlphaText(node?.value || '');
+    if (!value) {
+      if (required) throw new Error(`${label} wajib diisi`);
+      return '';
+    }
+
+    if (!ALPHA_TEXT_PATTERN.test(value)) {
+      throw new Error(`${label} hanya boleh berisi huruf dan spasi`);
+    }
+
+    if (node) node.value = value;
+    return value;
+  }
+
+  function normalizeAlphaText(value) {
+    return String(value || '')
+      .replace(/\u00A0/g, ' ')
+      .replace(/[^A-Za-zÀ-ÿ\s'-]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
   async function handleCsvUpload() {
     const input = document.getElementById('csvFile');
     if (!input || !input.files || input.files.length === 0) {
@@ -154,36 +258,58 @@
       showLoading();
       const file = input.files[0];
       const text = await readBatchFileAsCsv(file);
-      const rows = extractBatchRows(text);
-      console.debug('[batch] handleCsvUpload: parsed rows count=', rows.length);
-      if (rows && rows.length) console.debug('[batch] handleCsvUpload sample row=', rows[0]);
-      // Temporary on-page debug: show parsed count and first row so users without console can verify
-      const previewNode = document.getElementById('csvResultCount');
-      if (previewNode) {
-        try {
-          const sample = rows && rows.length ? JSON.stringify(rows[0]) : '-';
-          previewNode.textContent = `Parsed ${rows.length} rows. Sample: ${sample}`;
-        } catch (e) {
-          previewNode.textContent = `Parsed ${rows.length} rows.`;
-        }
-      }
-      if (!rows.length) {
-        throw { error: 'Tidak ada baris data valid untuk diproses' };
-      }
-      const data = await window.api.classifyBatch(rows);
-      const countNode = document.getElementById('csvResultCount');
-      if (countNode) {
-        countNode.textContent = `Berhasil memproses ${data.count} baris dari file ${file.name}`;
-      }
-      displayCsvResults(data.results || []);
-      await loadStatistics();
-      showNotification('File berhasil diproses', 'success');
+      await processBatchCsvText(text, file.name);
     } catch (error) {
       console.error(error);
       showNotification(error?.error || 'Gagal memproses file batch', 'error');
     } finally {
       hideLoading();
     }
+  }
+
+  async function handleSampleCsvText() {
+    const sampleNode = document.getElementById('csvSampleText');
+    const text = sampleNode?.value || '';
+
+    if (!text.trim()) {
+      showNotification('Isi data uji terlebih dahulu', 'error');
+      return;
+    }
+
+    try {
+      showLoading();
+      await processBatchCsvText(text, 'data uji');
+    } catch (error) {
+      console.error(error);
+      showNotification(error?.error || 'Gagal memproses data uji', 'error');
+    } finally {
+      hideLoading();
+    }
+  }
+
+  async function processBatchCsvText(text, sourceLabel) {
+    const rows = extractBatchRows(text);
+    console.debug('[batch] processBatchCsvText: parsed rows count=', rows.length);
+    if (rows && rows.length) console.debug('[batch] processBatchCsvText sample row=', rows[0]);
+
+    if (!rows.length) {
+      throw { error: 'Tidak ada baris data valid untuk diproses' };
+    }
+
+    const previewNode = document.getElementById('csvResultCount');
+    if (previewNode) {
+      const sample = rows.slice(0, 2).map((row) => `${row.nama_masalah || '-'} / ${row.nama_teknisi || '-'} / ${row.status_hi || '-'}`).join(' | ');
+      previewNode.textContent = `Siap memproses ${rows.length} baris dari ${sourceLabel}. Contoh: ${sample}`;
+    }
+
+    const data = await window.api.classifyBatch(rows);
+    const countNode = document.getElementById('csvResultCount');
+    if (countNode) {
+      countNode.textContent = `Berhasil memproses ${data.count} baris dari ${sourceLabel}`;
+    }
+    displayCsvResults(data.results || []);
+    await loadStatistics();
+    showNotification(`${sourceLabel} berhasil diproses`, 'success');
   }
 
   async function readBatchFileAsCsv(file) {
@@ -224,8 +350,11 @@
       throw { error: 'File kosong atau tidak memiliki data' };
     }
 
-    const expectedFields = ['status_hi', 'ttic', 'ttd_kb_num', 'sto'];
+    const expectedFields = ['nama_masalah', 'keterangan_masalah', 'nama_teknisi', 'status_hi', 'ttic', 'ttd_kb_num', 'sto'];
     const headerAliases = {
+      nama_masalah: ['nama_masalah', 'nama masalah', 'judul masalah', 'problem name'],
+      keterangan_masalah: ['keterangan_masalah', 'keterangan masalah', 'deskripsi masalah', 'detail masalah'],
+      nama_teknisi: ['nama_teknisi', 'nama teknisi', 'teknisi'],
       status_hi: ['status_hi', 'status hi', 'status', 'statushi'],
       ttic: ['ttic'],
       ttd_kb_num: ['ttd_kb_num', 'ttd kb num', 'ttd kb', 'ttd kb hari', 'ttd', 'ttd hari'],
@@ -266,6 +395,9 @@
     let headerIndex = detected.headerIndex;
     let header = parseCsvRow(lines[headerIndex].replace(/^\uFEFF/, ''), delimiter);
     let normalizedHeader = header.map(normalizeHeaderName);
+    let idxNamaMasalah = findHeaderIndexFromNormalized(normalizedHeader, headerAliases.nama_masalah);
+    let idxKeteranganMasalah = findHeaderIndexFromNormalized(normalizedHeader, headerAliases.keterangan_masalah);
+    let idxNamaTeknisi = findHeaderIndexFromNormalized(normalizedHeader, headerAliases.nama_teknisi);
     let idxStatus = findHeaderIndexFromNormalized(normalizedHeader, headerAliases.status_hi);
     let idxTtic = findHeaderIndexFromNormalized(normalizedHeader, headerAliases.ttic);
     let idxTtd = findHeaderIndexFromNormalized(normalizedHeader, headerAliases.ttd_kb_num);
@@ -274,15 +406,21 @@
     for (let i = 0; i < Math.min(lines.length, 20); i++) {
       const candidate = parseCsvRow(lines[i].replace(/^\uFEFF/, ''), delimiter);
       const candidateNormalized = candidate.map(normalizeHeaderName);
+      const candidateNamaMasalah = findHeaderIndexFromNormalized(candidateNormalized, headerAliases.nama_masalah);
+      const candidateKeteranganMasalah = findHeaderIndexFromNormalized(candidateNormalized, headerAliases.keterangan_masalah);
+      const candidateNamaTeknisi = findHeaderIndexFromNormalized(candidateNormalized, headerAliases.nama_teknisi);
       const candidateStatus = findHeaderIndexFromNormalized(candidateNormalized, headerAliases.status_hi);
       const candidateTtic = findHeaderIndexFromNormalized(candidateNormalized, headerAliases.ttic);
       const candidateTtd = findHeaderIndexFromNormalized(candidateNormalized, headerAliases.ttd_kb_num);
       const candidateSto = findHeaderIndexFromNormalized(candidateNormalized, headerAliases.sto);
-      const foundCount = [candidateStatus, candidateTtic, candidateTtd, candidateSto].filter((value) => value !== -1).length;
+      const foundCount = [candidateNamaMasalah, candidateKeteranganMasalah, candidateNamaTeknisi, candidateStatus, candidateTtic, candidateTtd, candidateSto].filter((value) => value !== -1).length;
       if (foundCount >= 3) {
         headerIndex = i;
         header = candidate;
         normalizedHeader = candidateNormalized;
+        idxNamaMasalah = candidateNamaMasalah;
+        idxKeteranganMasalah = candidateKeteranganMasalah;
+        idxNamaTeknisi = candidateNamaTeknisi;
         idxStatus = candidateStatus;
         idxTtic = candidateTtic;
         idxTtd = candidateTtd;
@@ -297,17 +435,23 @@
 
     for (let i = headerIndex + 1; i < lines.length; i++) {
       const cols = parseCsvRow(lines[i], delimiter);
+      const namaMasalah = normalizeAlphaText(idxNamaMasalah !== -1 ? (cols[idxNamaMasalah] || '') : '');
+      const keteranganMasalah = normalizeAlphaText(idxKeteranganMasalah !== -1 ? (cols[idxKeteranganMasalah] || '') : '');
+      const namaTeknisi = normalizeAlphaText(idxNamaTeknisi !== -1 ? (cols[idxNamaTeknisi] || '') : '');
       const status = normalizeBatchStatus(idxStatus !== -1 ? (cols[idxStatus] || '') : '');
       const ttic = normalizeBatchTtic(idxTtic !== -1 ? (cols[idxTtic] || '') : '');
       const ttdRaw = idxTtd !== -1 ? (cols[idxTtd] || '') : '';
       const ttd = Number.parseInt(String(ttdRaw).replace(/[^0-9-]/g, ''), 10);
       const sto = normalizeBatchText(idxSto !== -1 ? (cols[idxSto] || '') : '');
 
-      if (!status && !ttic && !sto && !Number.isFinite(ttd)) {
+      if (!namaMasalah && !keteranganMasalah && !namaTeknisi && !status && !ttic && !sto && !Number.isFinite(ttd)) {
         continue;
       }
 
       out.push({
+        nama_masalah: namaMasalah,
+        keterangan_masalah: keteranganMasalah,
+        nama_teknisi: namaTeknisi,
         status_hi: status,
         ttic,
         ttd_kb_num: Number.isFinite(ttd) ? ttd : 0,
@@ -324,6 +468,14 @@
       .trim()
       .replace(/[^a-z0-9]+/g, '_')
       .replace(/^_+|_+$/g, '');
+  }
+
+  function normalizeAlphaText(value) {
+    return String(value || '')
+      .replace(/\u00A0/g, ' ')
+      .replace(/[^A-Za-zÀ-ÿ\s'-]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
   }
 
   function findHeaderIndexFromNormalized(normalizedHeader, aliases) {
@@ -402,16 +554,19 @@
     resultCard.style.display = 'block';
     if (emptyState) emptyState.style.display = 'none';
 
-    let html = '<div id="csvPreview" class="mb-3"><div class="d-flex justify-content-between align-items-center mb-2"><h6 class="result-label mb-0">Hasil Klasifikasi Massal (preview)</h6><small class="text-muted">Menampilkan 5 baris pertama</small></div><div class="table-responsive"><table class="table table-sm align-middle"><thead><tr><th>No</th><th>Status HI</th><th>TTIC</th><th>TTD KB</th><th>STO</th><th>Prioritas</th><th>Confidence</th><th>Status</th></tr></thead><tbody>';
+    let html = '<div id="csvPreview" class="mb-3"><div class="d-flex justify-content-between align-items-center mb-2"><h6 class="result-label mb-0">Hasil Klasifikasi Massal (preview)</h6><small class="text-muted">Menampilkan 5 baris pertama</small></div><div class="table-responsive"><table class="table table-sm align-middle"><thead><tr><th>No</th><th>Nama Masalah</th><th>Keterangan</th><th>Teknisi</th><th>Status HI</th><th>TTIC</th><th>TTD KB</th><th>STO</th><th>Prioritas</th><th>Confidence</th><th>Status</th></tr></thead><tbody>';
     results.slice(0, 5).forEach((row, index) => {
       const prioritas = row.output?.prioritas || '-';
       const confidence = Math.round((row.output?.confidence || 0) * 100);
+      const namaMasalah = escapeHtml(row.input?.nama_masalah || '-');
+      const keterangan = escapeHtml(row.input?.keterangan_masalah || '-');
+      const teknisi = escapeHtml(row.input?.nama_teknisi || '-');
       const statusHi = escapeHtml(row.input?.status_hi || '-');
       const ttic = escapeHtml(row.input?.ttic || '-');
       const ttd = escapeHtml(String(row.input?.ttd_kb_num ?? '-'));
       const sto = escapeHtml(row.input?.sto || '-');
       const rowStatus = row.error ? `<span class="text-danger">Gagal: ${escapeHtml(row.error)}</span>` : '<span class="text-success">OK</span>';
-      html += `<tr><td>${index + 1}</td><td>${statusHi}</td><td>${ttic}</td><td>${ttd}</td><td>${sto}</td><td>${escapeHtml(prioritas)}</td><td>${confidence}%</td><td>${rowStatus}</td></tr>`;
+      html += `<tr><td>${index + 1}</td><td>${namaMasalah}</td><td>${keterangan}</td><td>${teknisi}</td><td>${statusHi}</td><td>${ttic}</td><td>${ttd}</td><td>${sto}</td><td>${escapeHtml(prioritas)}</td><td>${confidence}%</td><td>${rowStatus}</td></tr>`;
     });
     html += '</tbody></table></div></div>';
 
@@ -778,6 +933,8 @@
           }
         });
       }
+
+      renderEvaluationInsights(evaluation);
     } catch (error) {
       console.error('loadEvaluation', error);
       if (statusNode) {
@@ -791,6 +948,8 @@
       updateText('evalParamsNote', '-');
       updateText('evalSamples', '-');
       updateText('evalSamplesNote', '-');
+      const insights = document.getElementById('evaluationInsights');
+      if (insights) insights.innerHTML = '';
     }
   }
 
@@ -804,6 +963,59 @@
       summary: picked.length ? picked.join(' • ') : '',
       detail: picked.length ? 'Parameter tree terbaik yang dipakai saat model ini dilatih.' : ''
     };
+  }
+
+  function renderEvaluationInsights(evaluation) {
+    const container = document.getElementById('evaluationInsights');
+    if (!container) return;
+
+    const featureNames = evaluation.feature_names || ['status_enc', 'ttic_enc', 'ttd', 'sto_enc'];
+    const featureImportances = evaluation.feature_importances || [];
+    const explanations = {
+      status_enc: 'Status ticket menunjukkan apakah pekerjaan masih aktif, selesai, atau ditolak. Ini membantu model menilai urgensi operasional.',
+      ttic_enc: 'TTIC berhubungan langsung dengan SLA respon. Semakin sempit jendela waktunya, biasanya semakin tinggi prioritas.',
+      ttd: 'TTD KB menggambarkan umur atau kedewasaan knowledge base. Nilai ini membantu membedakan tiket yang masih perlu tindakan cepat.',
+      sto_enc: 'STO menangkap konteks lokasi kerja. Pola beban dan urgensi sering berbeda antar STO.'
+    };
+    const labels = {
+      status_enc: 'Status HI',
+      ttic_enc: 'TTIC',
+      ttd: 'TTD KB',
+      sto_enc: 'STO'
+    };
+
+    const rows = featureNames.map((name, index) => ({
+      name,
+      label: labels[name] || name,
+      importance: Number(featureImportances[index] || 0),
+      explanation: explanations[name] || 'Fitur ini dipakai untuk menangkap pola yang tidak terlihat dari data lain.'
+    })).sort((left, right) => right.importance - left.importance);
+
+    const extraFieldsNote = 'Kolom nama_masalah, keterangan_masalah, dan nama_teknisi adalah metadata operasional. Itu berguna untuk pencatatan dan audit, tetapi tidak dipakai model saat ini.';
+
+    container.innerHTML = rows.map((row, index) => {
+      const pct = Math.round(row.importance * 100);
+      return `
+        <div class="col-lg-3 col-md-6">
+          <div class="card card-soft h-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                <div>
+                  <div class="fw-bold">${row.label}</div>
+                  <small class="text-muted">Urutan prioritas #${index + 1}</small>
+                </div>
+                <span class="badge text-bg-danger">${pct}%</span>
+              </div>
+              <p class="small mb-0 text-muted">${row.explanation}</p>
+            </div>
+          </div>
+        </div>`;
+    }).join('') + `
+      <div class="col-12">
+        <div class="alert alert-light border mb-0">
+          <strong>Catatan:</strong> ${extraFieldsNote}
+        </div>
+      </div>`;
   }
 
   function renderProfileCard() {

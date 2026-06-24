@@ -170,9 +170,28 @@ function normalizeSto(value) {
     return normalizeText(value);
 }
 
+function normalizeAlphaText(value) {
+    return normalizeText(value)
+        .replace(/[^A-Za-zÀ-ÿ\s'-]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
+function assertAlphaText(value, label) {
+    const text = normalizeText(value);
+    if (!text) return '';
+    if (/[^A-Za-zÀ-ÿ\s'-]/.test(text)) {
+        throw new Error(`${label} hanya boleh berisi huruf dan spasi`);
+    }
+    return text;
+}
+
 function normalizeBatchInput(row = {}) {
     const ttd = Number.parseInt(String(row?.ttd_kb_num ?? row?.ttd ?? 0).replace(/[^0-9-]/g, ''), 10);
     return {
+        nama_masalah: normalizeAlphaText(row?.nama_masalah),
+        keterangan_masalah: normalizeAlphaText(row?.keterangan_masalah),
+        nama_teknisi: normalizeAlphaText(row?.nama_teknisi),
         status_hi: normalizeStatusHi(row?.status_hi),
         ttic: normalizeTtic(row?.ttic),
         ttd_kb_num: Number.isFinite(ttd) ? ttd : 0,
@@ -233,7 +252,13 @@ app.get('/api/health', (req, res) => {
  */
 app.post('/api/classify', authMiddleware, (req, res) => {
     try {
-        const payload = normalizeBatchInput(req.body || {});
+        const rawBody = req.body || {};
+        const payload = normalizeBatchInput({
+            ...rawBody,
+            nama_masalah: assertAlphaText(rawBody.nama_masalah, 'Nama Masalah'),
+            keterangan_masalah: assertAlphaText(rawBody.keterangan_masalah, 'Keterangan Masalah'),
+            nama_teknisi: assertAlphaText(rawBody.nama_teknisi, 'Nama Teknisi')
+        });
 
         // Validasi input
         if (!payload.status_hi || !payload.ttic || payload.ttd_kb_num === undefined) {
@@ -288,6 +313,9 @@ app.post('/api/classify/csv-text', authMiddleware, (req, res) => {
 
         const header = parseCsvLine(lines[0]).map(h => h.trim());
         const idx = {
+            nama_masalah: findHeaderIndex(header, ['nama_masalah', 'nama masalah', 'judul masalah', 'problem name']),
+            keterangan_masalah: findHeaderIndex(header, ['keterangan_masalah', 'keterangan masalah', 'deskripsi masalah', 'detail masalah']),
+            nama_teknisi: findHeaderIndex(header, ['nama_teknisi', 'nama teknisi', 'teknisi']),
             status_hi: findHeaderIndex(header, ['status_hi', 'status hi', 'status']),
             ttic: findHeaderIndex(header, ['ttic']),
             ttd: findHeaderIndex(header, ['ttd_kb_num', 'ttd kb', 'ttd kb hari', 'ttd']),
@@ -300,6 +328,9 @@ app.post('/api/classify/csv-text', authMiddleware, (req, res) => {
             if (!lines[i].trim()) continue;
             const cols = parseCsvLine(lines[i]);
             const payload = normalizeBatchInput({
+                nama_masalah: idx.nama_masalah !== -1 ? (cols[idx.nama_masalah] || '') : '',
+                keterangan_masalah: idx.keterangan_masalah !== -1 ? (cols[idx.keterangan_masalah] || '') : '',
+                nama_teknisi: idx.nama_teknisi !== -1 ? (cols[idx.nama_teknisi] || '') : '',
                 status_hi: idx.status_hi !== -1 ? (cols[idx.status_hi] || '') : '',
                 ttic: idx.ttic !== -1 ? (cols[idx.ttic] || '') : '',
                 ttd_kb_num: idx.ttd !== -1 ? (parseInt(cols[idx.ttd]) || 0) : 0,
@@ -555,8 +586,21 @@ function drawPdfTableRow(doc, row, widths, columns) {
     const x = doc.page.margins.left;
     const values = [row.no, row.timestamp, row.status_hi, row.ttic, row.ttd_kb_num, row.sto, row.prioritas, row.confidence, row.reasoning];
     const rowPadding = 4;
-    const rowHeight = 22;
     let rowY = doc.y;
+    const alignments = ['center', 'left', 'left', 'center', 'center', 'left', 'center', 'center', 'left'];
+    const texts = values.map((value, index) => index === 8 ? String(value ?? '').replace(/\s+/g, ' ').trim() : truncatePdfCell(value, widths[index], index));
+    let rowHeight = 22;
+
+    doc.font('Helvetica').fontSize(8);
+    texts.forEach((text, index) => {
+        const contentWidth = widths[index] - rowPadding * 2;
+        const textHeight = doc.heightOfString(text || '-', {
+            width: contentWidth,
+            align: alignments[index],
+            lineGap: 1
+        });
+        rowHeight = Math.max(rowHeight, Math.ceil(textHeight + rowPadding * 2));
+    });
 
     if (rowY + rowHeight > doc.page.height - doc.page.margins.bottom - 24) {
         doc.addPage({ size: 'A4', layout: 'landscape', margin: 40 });
@@ -566,21 +610,20 @@ function drawPdfTableRow(doc, row, widths, columns) {
     }
 
     let cursorX = x;
-    for (let i = 0; i < values.length; i++) {
+    for (let i = 0; i < texts.length; i++) {
         doc.rect(cursorX, rowY, widths[i], rowHeight).stroke('#d1d5db');
-        const cellText = truncatePdfCell(values[i], widths[i], i);
         doc.save();
         doc.fillColor('#111827').font('Helvetica').fontSize(8);
         doc.rect(cursorX + 1, rowY + 1, widths[i] - 2, rowHeight - 2).clip();
-        doc.text(cellText, cursorX + rowPadding, rowY + 6, {
+        doc.text(texts[i] || '-', cursorX + rowPadding, rowY + rowPadding, {
             width: widths[i] - rowPadding * 2,
-            height: rowHeight - 8,
-            align: i === 0 || i === 4 || i === 7 ? 'center' : 'left',
-            lineBreak: false,
+            height: rowHeight - rowPadding * 2,
+            align: alignments[i],
+            lineBreak: true,
             paragraphGap: 0,
             wordSpacing: 0,
             characterSpacing: 0,
-            ellipsis: true
+            ellipsis: i !== 8
         });
         doc.restore();
         cursorX += widths[i];
