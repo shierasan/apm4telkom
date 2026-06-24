@@ -171,19 +171,11 @@ function normalizeSto(value) {
 }
 
 function normalizeAlphaText(value) {
-    return normalizeText(value)
-        .replace(/[^A-Za-zÀ-ÿ\s'-]/g, '')
-        .replace(/\s+/g, ' ')
-        .trim();
+    return normalizeText(value);
 }
 
 function assertAlphaText(value, label) {
-    const text = normalizeText(value);
-    if (!text) return '';
-    if (/[^A-Za-zÀ-ÿ\s'-]/.test(text)) {
-        throw new Error(`${label} hanya boleh berisi huruf dan spasi`);
-    }
-    return text;
+    return normalizeText(value);
 }
 
 function normalizeBatchInput(row = {}) {

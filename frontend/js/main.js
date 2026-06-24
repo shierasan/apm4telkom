@@ -8,8 +8,11 @@
   let historyLimit = 25;
   let historyTotalPages = 1;
 
-  const STO_OPTIONS = ['BKR', 'DUM', 'PBB', 'PBR', 'PKR', 'PMB', 'RBI', 'RGT', 'STO 2'];
-  const ALPHA_TEXT_PATTERN = /^[A-Za-zÀ-ÿ\s'-]+$/;
+  const STO_OPTIONS = [
+    'PBB', 'BKR', 'MIS', 'PKR', 'PWG', 'RBI', 'SOK', 'AMK', 'BLS', 'KLE', 'PMB', 'PNP', 'RGT', 'TAK', 'TBH',
+    'BAG', 'BAS', 'DUM', 'SLJ', 'BKN', 'PPN', 'SAK', 'SEA', 'UBT', 'SGP', 'ARK', 'BGU', 'DRI', 'PJD', 'KDS', 'SYO',
+    'PBB TIMUR', 'PBB BARAT'
+  ];
   const SAMPLE_BATCH_CSV = `nama_masalah,keterangan_masalah,nama_teknisi,status_hi,ttic,ttd_kb_num,sto
 Gangguan Link Utama,Link utama terputus di wilayah pelanggan,Andi Pratama,In Progress,1x24 jam,95,PBR
 Gangguan Sinkronisasi,Data sinkronisasi belum masuk,Putri Aulia,In Progress,2x24 jam,80,DUM
@@ -56,7 +59,6 @@ Penolakan Kendala,Permintaan ditolak oleh pelanggan,Siti Rahma,Rejected,2x24 jam
   function bindClassifierForm() {
     const form = document.getElementById('classifierForm');
     if (form) form.addEventListener('submit', handleClassify);
-    bindAlphaOnlyInputs();
     populateStoOptions();
   }
 
@@ -90,17 +92,6 @@ Penolakan Kendala,Permintaan ditolak oleh pelanggan,Siti Rahma,Rejected,2x24 jam
         handleSampleCsvText();
       });
     }
-  }
-
-  function bindAlphaOnlyInputs() {
-    ['nama_masalah', 'keterangan_masalah', 'nama_teknisi'].forEach((id) => {
-      const node = document.getElementById(id);
-      if (!node) return;
-      node.addEventListener('input', () => {
-        const cleaned = normalizeAlphaText(node.value);
-        if (node.value !== cleaned) node.value = cleaned;
-      });
-    });
   }
 
   function populateStoOptions() {
@@ -225,25 +216,20 @@ Penolakan Kendala,Permintaan ditolak oleh pelanggan,Siti Rahma,Rejected,2x24 jam
 
   function validateAlphaField(id, label, required = false) {
     const node = document.getElementById(id);
-    const value = normalizeAlphaText(node?.value || '');
+    const value = normalizeTextInput(node?.value || '');
     if (!value) {
       if (required) throw new Error(`${label} wajib diisi`);
       return '';
-    }
-
-    if (!ALPHA_TEXT_PATTERN.test(value)) {
-      throw new Error(`${label} hanya boleh berisi huruf dan spasi`);
     }
 
     if (node) node.value = value;
     return value;
   }
 
-  function normalizeAlphaText(value) {
+  function normalizeTextInput(value) {
     return String(value || '')
       .replace(/\u00A0/g, ' ')
-      .replace(/[^A-Za-zÀ-ÿ\s'-]/g, '')
-      .replace(/\s+/g, ' ')
+      .replace(/[ ]{2,}/g, ' ')
       .trim();
   }
 
@@ -473,8 +459,7 @@ Penolakan Kendala,Permintaan ditolak oleh pelanggan,Siti Rahma,Rejected,2x24 jam
   function normalizeAlphaText(value) {
     return String(value || '')
       .replace(/\u00A0/g, ' ')
-      .replace(/[^A-Za-zÀ-ÿ\s'-]/g, '')
-      .replace(/\s+/g, ' ')
+      .replace(/[ ]{2,}/g, ' ')
       .trim();
   }
 
